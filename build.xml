@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="integrated-team-tracker" default="all" basedir="">
+
+    <description>
+        Build Script for creating the integrated-team-tracker deliverables.
+        I plan on adding stuff from INSTALL to this at some point.
+    </description>
+
+    <property name="pkg.name"    value="integrated-team-tracker"/>
+    <property name="pkg.version" value="0.0.1"/>
+
+    <property environment="env"/>
+    <property name="build.path"  value="${env.PWD}/build"/>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="build"/>
+    </target>
+
+    <target name="tar" depends="init">
+        <!-- i prefer having everything in my tarballs nice and prefixed -->
+        <copy file="Specfile" tofile="build/${pkg.name}-${pkg.version}.spec"/>
+
+        <tar compression="gzip" longfile="gnu"
+             destfile="${build.path}/${pkg.name}-${pkg.version}.tgz">
+            <!-- add redmine to the build -->
+            <tarfileset dir="redmine/"
+                        prefix="${pkg.name}-${pkg.version}/redmine">
+                <include name="**"/>
+                <exclude name="config/database.yml"/>
+            </tarfileset>
+            <!-- we will be using this prepackaged ruby/rails stack -->
+            <tarfileset dir=".rvm"
+                        prefix="${pkg.name}-${pkg.version}/.rvm">
+                <include name="**"/>
+                <exclude name="archives/**"/>
+                <exclude name="src/**"/>
+                <exclude name="gems/*/cache/*"/>
+            </tarfileset>
+            <!-- rpm building is much easier if we include the specfile in the tarball -->
+            <tarfileset dir="build/">
+                <include name="${pkg.name}-${pkg.version}.spec"/>
+            </tarfileset>
+        </tar>
+    </target>
+
+    <target name="rpm" depends="init,tar">
+    <!-- we would like to do this as follows which isn't possible due to an ancient version
+             of ant included with centos (and therefore most likely also rhel and others)...
+
+    <rpm specfile="build/${pkg.name}-${pkg.version}.tgz" command="-tb"/>
+
+             At least its almost just as easy to call the thing like we want it to work on the
+             command line.
+        -->
+        <exec executable="rpmbuild">
+            <arg value="-tb"/>
+            <arg value="${build.path}/${pkg.name}-${pkg.version}.tgz"/>
+        </exec>
+    </target>
+
+    <target name="all" depends="rpm"/>
+
+</project>

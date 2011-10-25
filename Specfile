@@ -1,0 +1,41 @@
+
+%define name    integrated-team-tracker
+%define version 0.0.1
+
+Name:      %{name}
+Version:   %{version}
+Release:   1
+Source:    %{name}-%{version}.tgz
+Summary:   Fully integrated redmine Package
+Group:     Development
+License:   GPLv3
+Vendor:    purplehaze.ch
+BuildRoot: /tmp/%{name}-%{version}-root
+# make this rpm relocatable
+Prefix:    /usr/%{name}
+
+%description
+Fully integrated redmine package that may be installed in a slotted
+manner by using the rpm relocatable feature. The idea is that each
+team may use this to setup a redmine instance with the least amount
+of pain involved. This contains quite somem sub packages since it
+will be used to configure a load of services on various systems.
+
+%prep
+%setup 
+
+%install
+[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+echo $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/usr/%{name}
+cp -r redmine $RPM_BUILD_ROOT/usr/%{name}/
+cp -r .rvm    $RPM_BUILD_ROOT/usr/%{name}/
+
+%files
+# basic 'userhome' where our redmine instance will live
+/usr/%{name}/.rvm/
+
+
+%files team
+/usr/%{name}/redmine/
+
