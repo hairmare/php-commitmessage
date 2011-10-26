@@ -59,8 +59,9 @@
     </target>
 
     <target name="phpunit">
-        <exec executable="phpunit">
+        <exec executable="phpunit" failonerror="true">
             <arg value="--coverage-clover=build/coverage.xml"/>
+            <arg value="--log-junit=build/junit.xml"/>
             <arg value="src/tests/"/>
         </exec>
     </target>
