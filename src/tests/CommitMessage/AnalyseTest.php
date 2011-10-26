@@ -31,7 +31,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetSplitter().
+     * test getting and setting of splitter
      */
     public function testGetSetSplitter()
     {
@@ -41,17 +41,6 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
 
         $this->_object->setSplitter($splitter);
         $this->assertSame($splitter, $this->_object->getSplitter());
-    }
-
-    /**
-     * @todo Implement testGetSplitter().
-     */
-    public function testGetSplitter()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
     }
 
     /**
@@ -71,13 +60,30 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+	 * test missing splitter
+     */
+    public function testAnalyseMissingSplitter()
+    {
+		$this->setExpectedException('Exception');
+		$this->_object->analyse();
+    }
+
+    /**
+	 * test missing handler stack
+     */
+    public function testAnalyseMissingHandlerStack()
+    {
+		$this->setExpectedException('Exception');
+		$this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
+		$this->_object->analyse();
+    }
+    /**
      * @todo Implement testAnalyse().
      */
     public function testAnalyse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+		$this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
+		$this->_object->analyse();
+		$this->markTestIncomplete();
     }
 }
