@@ -1,6 +1,6 @@
 <?php
 
-require_once '/home/hairmare/src/CommitMessage/HandlerStack.php';
+require_once 'src/CommitMessage/HandlerStack.php';
 
 /**
  * Test class for CommitMessage_HandlerStack.
