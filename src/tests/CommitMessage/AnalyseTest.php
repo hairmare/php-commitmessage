@@ -109,6 +109,24 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
         $this->_object->analyse();
     }
+
+    /**
+     * test missing handler factory
+     */
+    public function testAnalyseMissingHandlerFactory()
+    {
+        $this->setExpectedException('Exception');
+        $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
+        $this->_object->setHandlerStack(
+            $this->getMock(
+                'CommitMessage_HandlerStack',
+                array(
+                    'setCaller'
+                )
+            ))
+        ;
+        $this->_object->analyse();
+    }
     /**
      * check for missing head error
      */
@@ -116,9 +134,9 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     {
         $handlerStack = $this->_initAnalyseForHandlerStack('', 'body');
 
-		$this->_handlerFactory->expects($this->once())
-			    			  ->method('createHandler')
-							  ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+        $this->_handlerFactory->expects($this->once())
+                              ->method('createHandler')
+                              ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
 
         $handlerStack->expects($this->once())
                      ->method('append')
@@ -131,9 +149,9 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     {
         $handlerStack = $this->_initAnalyseForHandlerStack('head', '');
 
-		$this->_handlerFactory->expects($this->once())
-			    			  ->method('createHandler')
-							  ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+        $this->_handlerFactory->expects($this->once())
+                              ->method('createHandler')
+                              ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
 
         $handlerStack->expects($this->once())
                      ->method('append')
@@ -174,5 +192,5 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                      ->method('append');
 
         $this->_object->analyse();
- }
+    }
 }
