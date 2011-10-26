@@ -60,30 +60,52 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * test missing splitter
+     * test missing splitter
      */
     public function testAnalyseMissingSplitter()
     {
-		$this->setExpectedException('Exception');
-		$this->_object->analyse();
+        $this->setExpectedException('Exception');
+        $this->_object->analyse();
     }
 
     /**
-	 * test missing handler stack
+     * test missing handler stack
      */
     public function testAnalyseMissingHandlerStack()
     {
-		$this->setExpectedException('Exception');
-		$this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
-		$this->_object->analyse();
+        $this->setExpectedException('Exception');
+        $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
+        $this->_object->analyse();
     }
     /**
-     * @todo Implement testAnalyse().
+     * check for missing head error
      */
-    public function testAnalyse()
+    public function testAnalyseMissingHead()
     {
-		$this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
-		$this->_object->analyse();
-		$this->markTestIncomplete();
+        $splitter = $this->getMock(
+            'CommitMessage_Splitter',
+            array(
+                'getData'
+            )
+        );
+        $splitter->expects($this->once())
+                 ->method('getData')
+                 ->will($this->returnValue(array('head'=>'', 'body'=>'body')));
+
+        $handlerStack = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array(
+                'setCaller',
+                'append'
+            )
+        );
+        $handlerStack->expects($this->once())
+                     ->method('append')
+                     ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
+    
+        $this->_object->setSplitter($splitter);
+        $this->_object->setHandlerStack($handlerStack);
+
+        $this->_object->analyse();
     }
 }

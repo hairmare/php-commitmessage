@@ -1,5 +1,7 @@
 <?php
 
+require_once 'src/CommitMessage/Handler/WarnMissingText.php';
+
 /**
  * analyse parts and fill handler stack
  */
@@ -36,7 +38,9 @@ class CommitMessage_Analyse
     private function _analyseHead($head)
     {
         if (empty($head)) {
-            throw new CommitMessage_Exception('no header found in commit message');
+            $this->_appendHandlerStack(
+                new CommitMessage_Handler_WarnMissingText
+            );
         }
     }
     private function _analyseBody($body)

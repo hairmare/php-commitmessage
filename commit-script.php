@@ -14,84 +14,49 @@ require_once 'src/CommitMessage/Analyse.php';
  */
 class CommitMessage_HandlerStack extends ArrayObject
 {
-	private $_caller = false;
-	public function setCaller($caller)
-	{
-		if ($this->_caller) {
-			throw new Exception('You may not override the caller');
-		}
-		$this->_caller = $caller;
-	}
-	public function getCaller()
-	{
-		return $this->_caller;
-	}
+    private $_caller = false;
+    public function setCaller($caller)
+    {
+        if ($this->_caller) {
+            throw new Exception('You may not override the caller');
+        }
+        $this->_caller = $caller;
+    }
+    public function getCaller()
+    {
+        return $this->_caller;
+    }
     public function run()
     {
         foreach ($this AS $handler)
         {
-			printf("Running %s\n", get_class($handler));
+            printf("Running %s\n", get_class($handler));
             $handler->run();
         }
     }
-	public function append($data)
-	{
-		$data->setCaller($this);
-		return parent::append($data);
-	}
-}
-
-/**
- * 
- */
-interface CommitMessage_Handler_Interface
-{
-    public function run();
-	public function setCaller($caller);
-}
-
-/**
- *
- */
-abstract class CommitMessage_Handler_Abstract implements CommitMessage_Handler_Interface
-{
-	private $_caller = false;
-	public function setCaller($caller)
-	{
-		if ($this->_caller) {
-			throw new Exception('Reseting caller is illegal');
-		}
-		$this->_caller = $caller;
-	}
-	public function getCaller()
-	{
-		return $this->_caller;
-	}
-    /**
-     * make interface errors runtime
-     * @todo remove for production!
-     */
-    public function run() {
-        throw new Exception('implment run()');
+    public function append($data)
+    {
+        $data->setCaller($this);
+        return parent::append($data);
     }
 }
 
-class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
+abstract class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
 {
     private $_issueId;
-	protected $_redmine;
+    protected $_redmine;
     public function setIssueId($issueId)
     {
         $this->_issueId = $issueId;
     }
-	public function getIssueId()
-	{
-		return $this->_issueId;
-	}
-	protected function _initRedmine()
-	{
-		if (empty($this->_redmine)) $this->_redmine = new Issue;
-	}
+    public function getIssueId()
+    {
+        return $this->_issueId;
+    }
+    protected function _initRedmine()
+    {
+        if (empty($this->_redmine)) $this->_redmine = new Issue;
+    }
 }
 
 /**
@@ -99,26 +64,26 @@ class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
  */
 class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
 {
-	protected $_statusMap = array(
-		1 => 2
-	);
+    protected $_statusMap = array(
+        1 => 2
+    );
     public function run() {
         // get issue
-		$this->_initRedmine();
-		$this->_redmine->find($this->getIssueId());
+        $this->_initRedmine();
+        $this->_redmine->find($this->getIssueId());
 
         // check status
-		$statusId = (int) $this->_redmine->status['id'];
+        $statusId = (int) $this->_redmine->status['id'];
 
-		// change status if needed
-		$statusMap = $this->_statusMap;
-		$statusKeys = array_keys($statusMap);
-		if (in_array($statusId, $statusKeys)) {
-			$setdev = new CommitMessage_Handler_IssueChangeStatus;
-			$setdev->setIssueId($this->getIssueId());
-			$setdev->setNewStatus($statusMap[$statusId]);
-			$this->getCaller()->append($setdev);
-		}
+        // change status if needed
+        $statusMap = $this->_statusMap;
+        $statusKeys = array_keys($statusMap);
+        if (in_array($statusId, $statusKeys)) {
+            $setdev = new CommitMessage_Handler_IssueChangeStatus;
+            $setdev->setIssueId($this->getIssueId());
+            $setdev->setNewStatus($statusMap[$statusId]);
+            $this->getCaller()->append($setdev);
+        }
     }
 }
 /**
@@ -128,52 +93,52 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
 {
     public function run()
     {
-		$this->_initRedmine();
-		$this->_redmine->find($this->getIssueId(), array('include'=>'journals'));
+        $this->_initRedmine();
+        $this->_redmine->find($this->getIssueId(), array('include'=>'journals'));
 
-		// hmm... not as pretty as it should be does the job
-		$handlerStack = $this->getCaller();
-		$analyser = $handlerStack->getCaller();
-		$splitter = $analyser->getSplitter();
-		$head = $splitter->getHead();
-		$body = $splitter->getBody();
+        // hmm... not as pretty as it should be does the job
+        $handlerStack = $this->getCaller();
+        $analyser = $handlerStack->getCaller();
+        $splitter = $analyser->getSplitter();
+        $head = $splitter->getHead();
+        $body = $splitter->getBody();
 
-		$note  = "commit: *$head*\n\n";
-		$note .= "* http://websvn/url/\n\n<pre>$body</pre>";
+        $note  = "commit: *$head*\n\n";
+        $note .= "* http://websvn/url/\n\n<pre>$body</pre>";
 
-		$this->_redmine->set('notes', $note)->save();
+        $this->_redmine->set('notes', $note)->save();
     }
 }
 
 class CommitMessage_Handler_IssueChangeStatus extends CommitMessage_Handler_Issue
 {
-	private $_newStatus = false;
+    private $_newStatus = false;
 
-	public function setNewStatus($newStatus)
-	{
-		$this->_newStatus = $newStatus;
-	}
+    public function setNewStatus($newStatus)
+    {
+        $this->_newStatus = $newStatus;
+    }
 
-	public function run()
-	{
-		if (!$this->_newStatus) {
-			throw new Exception('IssueChangeStatus called without newStatus');
-		}
+    public function run()
+    {
+        if (!$this->_newStatus) {
+            throw new Exception('IssueChangeStatus called without newStatus');
+        }
 
-		$this->_initRedmine();
-		$this->_redmine->find($this->getIssueId());
-		$this->_redmine
-			 ->set('status_id', $this->_newStatus)
-			 ->save();
-	}
+        $this->_initRedmine();
+        $this->_redmine->find($this->getIssueId());
+        $this->_redmine
+             ->set('status_id', $this->_newStatus)
+             ->save();
+    }
 }
 
 require_once('lib/phpactiveresource-0.14-beta/ActiveResource.php');
 
 class Redmine extends ActiveResource
 {
-	var $site = 'http://b3126476278c49215556ed00592bd331bb8e65d3:@192.168.1.109:3000/';
-	var $request_format = 'xml';
+    var $site = 'http://b3126476278c49215556ed00592bd331bb8e65d3:@192.168.1.109:3000/';
+    var $request_format = 'xml';
 }
 class Issue extends Redmine {}
 
