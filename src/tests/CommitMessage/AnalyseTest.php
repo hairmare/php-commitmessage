@@ -41,9 +41,16 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                 'getData'
             )
         );
+
+        $returnValue = $this->returnValue(
+            array(
+                'head' => $head,
+                'body'=>$body
+            )
+        );
         $splitter->expects($this->once())
                  ->method('getData')
-                 ->will($this->returnValue(array('head'=>$head, 'body'=>$body)));
+                 ->will($returnValue);
 
         $handlerStack = $this->getMock(
             'CommitMessage_HandlerStack',
@@ -53,7 +60,9 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->_handlerFactory = $this->getMock('CommitMessage_HandlerFactory');
+        $this->_handlerFactory = $this->getMock(
+            'CommitMessage_HandlerFactory'
+        );
    
         $this->_object->setSplitter($splitter);
         $this->_object->setHandlerFactory($this->_handlerFactory);
