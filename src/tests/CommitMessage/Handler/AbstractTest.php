@@ -5,7 +5,8 @@ require_once 'src/CommitMessage/Handler/Abstract.php';
 /**
  * stub class for testing abstract class
  */
-class Concrete_CommitMessage_Handler_Abstract extends CommitMessage_Handler_Abstract
+class Concrete_CommitMessage_Handler_Abstract 
+    extends CommitMessage_Handler_Abstract
 {
     public function run()
     {
