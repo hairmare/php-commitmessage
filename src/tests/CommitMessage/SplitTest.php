@@ -47,4 +47,3 @@ class CommitMessage_SplitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($body, $this->_object->getBody());
     }
 }
-?>

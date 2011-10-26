@@ -7,7 +7,9 @@ require_once 'src/CommitMessage/Handler/Abstract.php';
  */
 class Concrete_CommitMessage_Handler_Abstract extends CommitMessage_Handler_Abstract
 {
-    public function run() {}
+    public function run()
+    {
+    }
 }
 
 /**

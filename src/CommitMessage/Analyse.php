@@ -67,8 +67,8 @@ class CommitMessage_Analyse
     private function _appendHandlerStack($handler)
     {
         if (is_array($handler)) {
-            foreach ($handler AS $this_handler) {
-                $this->_appendHandlerStack($this_handler);
+            foreach ($handler AS $thisHandler) {
+                $this->_appendHandlerStack($thisHandler);
             }
         } else {
             $this->_handlerStack->append($handler);
