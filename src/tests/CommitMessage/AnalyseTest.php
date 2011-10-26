@@ -13,6 +13,8 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     protected $_object;
 
+    protected $_handlerFactory = false;
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -28,6 +30,36 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        $this->_handlerFactory = false;
+    }
+
+    private function _initAnalyseForHandlerStack($head, $body)
+    {
+        $splitter = $this->getMock(
+            'CommitMessage_Splitter',
+            array(
+                'getData'
+            )
+        );
+        $splitter->expects($this->once())
+                 ->method('getData')
+                 ->will($this->returnValue(array('head'=>$head, 'body'=>$body)));
+
+        $handlerStack = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array(
+                'setCaller',
+                'append'
+            )
+        );
+
+        $this->_handlerFactory = $this->getMock('CommitMessage_HandlerFactory');
+   
+        $this->_object->setSplitter($splitter);
+        $this->_object->setHandlerFactory($this->_handlerFactory);
+        $this->_object->setHandlerStack($handlerStack);
+
+        return $handlerStack;
     }
 
     /**
@@ -82,59 +114,65 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     public function testAnalyseMissingHead()
     {
-        $splitter = $this->getMock(
-            'CommitMessage_Splitter',
-            array(
-                'getData'
-            )
-        );
-        $splitter->expects($this->once())
-                 ->method('getData')
-                 ->will($this->returnValue(array('head'=>'', 'body'=>'body')));
+        $handlerStack = $this->_initAnalyseForHandlerStack('', 'body');
 
-        $handlerStack = $this->getMock(
-            'CommitMessage_HandlerStack',
-            array(
-                'setCaller',
-                'append'
-            )
-        );
+		$this->_handlerFactory->expects($this->once())
+			    			  ->method('createHandler')
+							  ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+
         $handlerStack->expects($this->once())
                      ->method('append')
                      ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
     
-        $this->_object->setSplitter($splitter);
-        $this->_object->setHandlerStack($handlerStack);
-
         $this->_object->analyse();
     }
 
     public function testAnalyseMissingBody()
     {
-        $splitter = $this->getMock(
-            'CommitMessage_Splitter',
-            array(
-                'getData'
-            )
-        );
-        $splitter->expects($this->once())
-                 ->method('getData')
-                 ->will($this->returnValue(array('head'=>'head', 'body'=>'')));
+        $handlerStack = $this->_initAnalyseForHandlerStack('head', '');
 
-        $handlerStack = $this->getMock(
-            'CommitMessage_HandlerStack',
-            array(
-                'setCaller',
-                'append'
-            )
-        );
+		$this->_handlerFactory->expects($this->once())
+			    			  ->method('createHandler')
+							  ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+
         $handlerStack->expects($this->once())
                      ->method('append')
                      ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
     
-        $this->_object->setSplitter($splitter);
-        $this->_object->setHandlerStack($handlerStack);
-
         $this->_object->analyse();
     }
+
+    public function testAnalyseWithIssueBody()
+    {
+        $handlerStack = $this->_initAnalyseForHandlerStack('head', 'body text with issue #1');
+
+        $issuecheck = $this->getMock(
+            'CommitMessage_Handler_IssueCheck',
+            array(
+                'setIssueId'
+            )
+        );
+        $issuecheck->expects($this->once())
+                   ->method('setIssueId')
+                   ->with(1);
+
+        $issuedecorate = $this->getMock(
+            'CommitMessage_Handler_IssueDecorate',
+            array(
+                'setIssueId'
+            )
+        );
+        $issuedecorate->expects($this->once())
+                      ->method('setIssueId')
+                      ->with(1);
+
+        $this->_handlerFactory->expects($this->any())
+                              ->method('createHandler')
+                              ->will($this->onConsecutiveCalls($issuedecorate, $issuecheck));
+
+        $handlerStack->expects($this->exactly(2))
+                     ->method('append');
+
+        $this->_object->analyse();
+ }
 }
