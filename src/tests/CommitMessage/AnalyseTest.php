@@ -11,7 +11,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     /**
      * @var CommitMessage_Analyse
      */
-    protected $object;
+    protected $_object;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -19,7 +19,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new CommitMessage_Analyse;
+        $this->_object = new CommitMessage_Analyse;
     }
 
     /**
@@ -53,14 +53,19 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetHandlerStack().
+     * check for working caller relation in setter
      */
     public function testSetHandlerStack()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+        $handlerStack = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array('setCaller')
         );
+        $handlerStack->expects($this->once())
+                     ->method('setCaller')
+                     ->with($this->isInstanceOf($this->_object));
+
+        $this->_object->setHandlerStack($handlerStack);
     }
 
     /**
@@ -74,4 +79,3 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         );
     }
 }
-?>
