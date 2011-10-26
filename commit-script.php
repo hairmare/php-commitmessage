@@ -10,25 +10,7 @@ require_once 'src/CommitMessage/Split.php';
 require_once 'src/CommitMessage/Analyse.php';
 require_once 'src/CommitMessage/HandlerFactory.php';
 require_once 'src/CommitMessage/HandlerStack.php';
-
-abstract class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
-{
-    private $_issueId;
-    protected $_redmine;
-    public function setIssueId($issueId)
-    {
-        $this->_issueId = $issueId;
-    }
-    public function getIssueId()
-    {
-        return $this->_issueId;
-    }
-    protected function _initRedmine()
-    {
-        if (empty($this->_redmine)) $this->_redmine = new Issue;
-    }
-}
-
+require_once 'src/CommitMessage/Handler/Issue.php';
 /**
  * look if issue is in db and commiter has rights on issue
  */
