@@ -123,8 +123,8 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                 array(
                     'setCaller'
                 )
-            ))
-        ;
+            )
+        );
         $this->_object->analyse();
     }
     /**
@@ -134,13 +134,21 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     {
         $handlerStack = $this->_initAnalyseForHandlerStack('', 'body');
 
+        $returnValue = $this->returnValue(
+            $this->getMock(
+                'CommitMessage_Handler_WarnMissingText'
+            )
+        );
         $this->_handlerFactory->expects($this->once())
                               ->method('createHandler')
-                              ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+                              ->will($returnValue);
 
+        $isInstanceOf = $this->isInstanceOf(
+            'CommitMessage_Handler_WarnMissingText'
+        );
         $handlerStack->expects($this->once())
                      ->method('append')
-                     ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
+                     ->with($isInstanceOf);
     
         $this->_object->analyse();
     }
@@ -149,20 +157,31 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     {
         $handlerStack = $this->_initAnalyseForHandlerStack('head', '');
 
+        $returnValue = $this->returnValue(
+            $this->getMock(
+                'CommitMessage_Handler_WarnMissingText'
+            )
+        );
         $this->_handlerFactory->expects($this->once())
                               ->method('createHandler')
-                              ->will($this->returnValue($this->getMock('CommitMessage_Handler_WarnMissingText')));
+                              ->will($returnValue);
 
+        $isInstanceOf = $this->isInstanceOf(
+            'CommitMessage_Handler_WarnMissingText'
+        );
         $handlerStack->expects($this->once())
                      ->method('append')
-                     ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
+                     ->with($isInstanceOf);
     
         $this->_object->analyse();
     }
 
     public function testAnalyseWithIssueBody()
     {
-        $handlerStack = $this->_initAnalyseForHandlerStack('head', 'body text with issue #1');
+        $handlerStack = $this->_initAnalyseForHandlerStack(
+            'head',
+            'body text with issue #1'
+        );
 
         $issuecheck = $this->getMock(
             'CommitMessage_Handler_IssueCheck',
@@ -184,9 +203,13 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                       ->method('setIssueId')
                       ->with(1);
 
+        $onConsecutiveCalls = $this->onConsecutiveCalls(
+            $issuecheck,
+            $issuedecorate
+        );
         $this->_handlerFactory->expects($this->any())
                               ->method('createHandler')
-                              ->will($this->onConsecutiveCalls($issuedecorate, $issuecheck));
+                              ->will($onConsecutiveCalls);
 
         $handlerStack->expects($this->exactly(2))
                      ->method('append');
