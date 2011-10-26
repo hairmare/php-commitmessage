@@ -1,12 +1,12 @@
 
 %define name    integrated-team-tracker
-%define version 0.0.1
+%define version 0.0.2
 
 Name:      %{name}
 Version:   %{version}
 Release:   1
 Source:    %{name}-%{version}.tgz
-Summary:   Fully integrated redmine Package
+Summary:   fully integrated redmine setup
 Group:     Development
 License:   GPLv3
 Vendor:    purplehaze.ch
@@ -18,8 +18,27 @@ Prefix:    /usr/%{name}
 Fully integrated redmine package that may be installed in a slotted
 manner by using the rpm relocatable feature. The idea is that each
 team may use this to setup a redmine instance with the least amount
-of pain involved. This contains quite somem sub packages since it
+of pain involved. This contains quite some sub packages since it
 will be used to configure a load of services on various systems.
+This base package only contains the needed libraries. See the 
+subpackages for more info:
+- team
+- puppet
+- hudson
+- jabber
+
+%package team
+Group:   Development
+Summary: The team package contains the redmine install
+
+%description team
+The actual redmine installation in a relocateable way useable for
+multi installs. The forthcoming puppet module will use this to
+install multiple puppet frontends.
+
+#%package puppet
+#Group:   Development
+#Summary: puppet recipies for full integration
 
 %prep
 %setup 
@@ -35,7 +54,7 @@ cp -r .rvm    $RPM_BUILD_ROOT/usr/%{name}/
 # basic 'userhome' where our redmine instance will live
 /usr/%{name}/.rvm/
 
-
 %files team
 /usr/%{name}/redmine/
 
+#%files puppet
