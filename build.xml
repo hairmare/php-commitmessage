@@ -7,7 +7,7 @@
     </description>
 
     <property name="pkg.name"    value="integrated-team-tracker"/>
-    <property name="pkg.version" value="0.0.1"/>
+    <property name="pkg.version" value="0.0.2"/>
 
     <property environment="env"/>
     <property name="build.path"  value="${env.PWD}/build"/>
@@ -18,9 +18,47 @@
 
     <target name="init">
         <mkdir dir="build"/>
+        <mkdir dir="source"/>
+        <mkdir dir="lib"/>
     </target>
 
-    <target name="tar" depends="init">
+    <target name="download" depends="init">
+        <get src="https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer"
+             dest="source/rvm-installer"/>
+        <get src="http://rubyforge.org/frs/download.php/75097/redmine-1.2.1.tar.gz"
+             dest="source/redmine-1.2.1.tar.gz"/>
+        <!-- plugins -->
+        <get src="https://github.com/relaxdiego/redmine_backlogs/tarball/v0.6.14"
+             dest="source/relaxdiego-redmine_backlogs-v0.6.14.tgz"/>
+        <get src="https://bitbucket.org/haru_iida/redmine_code_review/downloads/redmine_code_review-0.4.3.zip"
+             dest="source/redmine_code_review-0.4.3.zip"/>
+        <get src="http://r-labs.googlecode.com/files/redmine_hudson-1.0.7.zip"
+             dest="source/redmine_hudson-1.0.7.zip"/>
+        <get src="https://github.com/commandprompt/redmine_silencer/tarball/master"
+             dest="source/commandprompt-redmine_silencer-master.tgz"/>
+        <get src="https://github.com/jwigal/nested_layouts/tarball/master"
+             dest="source/jwigal-nested_layouts-master.tgz"/>
+        <get src="https://github.com/jamtur01/redmine_tab/tarball/0.3.1"
+             dest="source/jamtur0-redmine_tab-0.3.1-master.tgz"/>
+        <get src="https://github.com/bradbeattie/redmine-graphs-plugin/tarball/master"
+             dest="source/bradbeattie-redmine-graphs-master.tgz"/>
+        <get src="http://projects.andriylesyuk.com/attachments/download/13/orangutan-1.05.tar.bz2"
+             dest="source/orangutan-1.05.tar.bz2"/>
+        <!-- theme -->
+        <get src="https://github.com/koppen/redmine-pepper-theme/tarball/master"
+             dest="source/koppen-redmine-pepper-theme-master.tgz"/>
+
+        <!-- redmine php integration -->
+        <get src="https://github.com/downloads/lux/phpactiveresource/phpactiveresource-0.14-beta.tar.gz"
+             dest="source/phpactiveresource-0.14-beta.tar.gz"/>
+    </target>
+
+    <target name="build" depends="init">
+        <unzip src="source/phpactiveresource-0.14-beta.tar.gz"
+               dest="lib/"/>
+    </target>
+
+    <target name="tar" depends="build">
         <!-- i prefer having everything in my tarballs nice and prefixed -->
         <copy file="Specfile" tofile="build/${pkg.name}-${pkg.version}.spec"/>
 
