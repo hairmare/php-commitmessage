@@ -19,8 +19,7 @@ class CommitMessage_HandlerStack extends ArrayObject
     }
     public function run()
     {
-        foreach ($this AS $handler)
-        {
+        foreach ($this AS $handler) {
             $handler->run();
         }
     }
