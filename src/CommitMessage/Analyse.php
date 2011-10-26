@@ -30,13 +30,19 @@ class CommitMessage_Analyse
     public function analyse()
     {
         if (!$this->_splitter) {
-            throw new Exception('please set a splitter before calling analyse()');
+            throw new Exception(
+                'please set a splitter before calling analyse()'
+            );
         }
         if (!$this->_handlerStack) {
-            throw new Exception('please set a handlerStack before calling analyse()');
+            throw new Exception(
+                'please set a handlerStack before calling analyse()'
+            );
         }
         if (!$this->_handlerFactory) {
-            throw new Exception('please set a handlerFactory before calling analyse()');
+            throw new Exception(
+                'please set a handlerFactory before calling analyse()'
+            );
         }
         $data = $this->_splitter->getData();
         $this->_analyseHead($data['head']);
@@ -47,7 +53,9 @@ class CommitMessage_Analyse
     {
         if (empty($head)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->createHandler('CommitMessage_Handler_WarnMissingText')
+                $this->_handlerFactory->createHandler(
+                    'CommitMessage_Handler_WarnMissingText'
+                )
             );
         }
     }
@@ -55,17 +63,23 @@ class CommitMessage_Analyse
     {
         if (empty($body)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->createHandler('CommitMessage_Handler_WarnMissingText')
+                $this->_handlerFactory->createHandler(
+                    'CommitMessage_Handler_WarnMissingText'
+                )
             );
         }
         preg_match_all('/#[0-9]+/', $body, $matches);
         foreach ($matches[0] AS $match) {
             $issueId = substr($match, 1);
 
-            $check = $this->_handlerFactory->createHandler('CommitMessage_Handler_IssueCheck');
+            $check = $this->_handlerFactory->createHandler(
+                'CommitMessage_Handler_IssueCheck'
+            );
             $check->setIssueId($issueId);
 
-            $decorate = $this->_handlerFactory->createHandler('CommitMessage_Handler_IssueDecorate');
+            $decorate = $this->_handlerFactory->createHandler(
+                'CommitMessage_Handler_IssueDecorate'
+            );
             $decorate->setIssueId($issueId);
 
             $this->_appendHandlerStack(
