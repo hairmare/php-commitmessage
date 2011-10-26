@@ -60,7 +60,7 @@
 
     <target name="phpunit">
         <exec executable="phpunit">
-            <arg value="--coverage-clover=build/coverage.xml "/>
+            <arg value="--coverage-clover=build/coverage.xml"/>
             <arg value="tests/"/>
         </exec>
     </target>
