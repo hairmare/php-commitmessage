@@ -9,38 +9,7 @@
 require_once 'src/CommitMessage/Split.php';
 require_once 'src/CommitMessage/Analyse.php';
 require_once 'src/CommitMessage/HandlerFactory.php';
-
-/**
- * 
- */
-class CommitMessage_HandlerStack extends ArrayObject
-{
-    private $_caller = false;
-    public function setCaller($caller)
-    {
-        if ($this->_caller) {
-            throw new Exception('You may not override the caller');
-        }
-        $this->_caller = $caller;
-    }
-    public function getCaller()
-    {
-        return $this->_caller;
-    }
-    public function run()
-    {
-        foreach ($this AS $handler)
-        {
-            printf("Running %s\n", get_class($handler));
-            $handler->run();
-        }
-    }
-    public function append($data)
-    {
-        $data->setCaller($this);
-        return parent::append($data);
-    }
-}
+require_once 'src/CommitMessage/HandlerStack.php';
 
 abstract class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
 {
