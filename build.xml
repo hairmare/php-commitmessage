@@ -74,7 +74,17 @@
         </exec>
     </target>
 
-    <target name="integrate" depends="phpunit,checkstyle"/>
+    <target name="pmd">
+        <exec executable="phpmd">
+            <arg value="--reportfile"/>
+            <arg path="${basedir}/build/pmd.xml"/>
+            <arg path="${basedir}/src/"/>
+            <arg value="xml"/>
+            <arg value="codesize,design,naming,unusedcode"/>
+        </exec>
+    </target>
+
+    <target name="integrate" depends="phpunit,checkstyle,pmd"/>
 
     <target name="tar" depends="build">
         <!-- i prefer having everything in my tarballs nice and prefixed -->
