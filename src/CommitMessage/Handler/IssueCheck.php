@@ -10,7 +10,8 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     protected $_statusMap = array(
         1 => 2
     );
-    public function run() {
+    public function run() 
+    {
         // get issue
         $this->_initRedmine();
         $this->_redmine->find($this->getIssueId());
