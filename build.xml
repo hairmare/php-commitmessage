@@ -86,7 +86,15 @@
         </exec>
     </target>
 
-    <target name="integrate" depends="phpunit,checkstyle,pmd"/>
+    <target name="phploc">
+		<exec executable="phploc">
+			<arg value="--log-csv"/>
+			<arg value="build/phploc.csv"/>
+			<arg path="src/"/>
+		</exec>
+    </target>
+
+    <target name="integrate" depends="phpunit,checkstyle,pmd,phploc"/>
 
     <target name="tar" depends="build">
         <!-- i prefer having everything in my tarballs nice and prefixed -->
