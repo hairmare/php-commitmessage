@@ -108,4 +108,33 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
 
         $this->_object->analyse();
     }
+
+    public function testAnalyseMissingBody()
+    {
+        $splitter = $this->getMock(
+            'CommitMessage_Splitter',
+            array(
+                'getData'
+            )
+        );
+        $splitter->expects($this->once())
+                 ->method('getData')
+                 ->will($this->returnValue(array('head'=>'head', 'body'=>'')));
+
+        $handlerStack = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array(
+                'setCaller',
+                'append'
+            )
+        );
+        $handlerStack->expects($this->once())
+                     ->method('append')
+                     ->with($this->isInstanceOf('CommitMessage_Handler_WarnMissingText'));
+    
+        $this->_object->setSplitter($splitter);
+        $this->_object->setHandlerStack($handlerStack);
+
+        $this->_object->analyse();
+    }
 }
