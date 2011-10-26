@@ -56,11 +56,16 @@ class CommitMessage_Analyse
 
             $check = new CommitMessage_Handler_IssueCheck;
             $check->setIssueId($issueId);
-            $this->_appendHandlerStack($check);
 
             $decorate = new CommitMessage_Handler_IssueDecorate;
             $decorate->setIssueId($issueId);
-            $this->_appendHandlerStack($decorate);
+
+            $this->_appendHandlerStack(
+                array(
+                    $check,
+                    $decorate
+                )
+            );
         }
     }
 
