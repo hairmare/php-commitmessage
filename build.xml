@@ -61,11 +61,20 @@
     <target name="phpunit">
         <exec executable="phpunit">
             <arg value="--coverage-clover=build/coverage.xml"/>
-            <arg value="tests/"/>
+            <arg value="src/tests/"/>
         </exec>
     </target>
 
-    <target name="integrate" depends="phpunit"/>
+    <target name="checkstyle">
+        <exec executable="phpcs">
+            <arg value="--standard=Zend"/>
+            <arg value="--report=checkstyle"/>
+            <arg value="--report-file=${basedir}/build/checkstyle.xml"/>
+            <arg value="src/"/>
+        </exec>
+    </target>
+
+    <target name="integrate" depends="phpunit,checkstyle"/>
 
     <target name="tar" depends="build">
         <!-- i prefer having everything in my tarballs nice and prefixed -->
