@@ -33,12 +33,14 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     /**
      * @todo Implement testSetSplitter().
      */
-    public function testSetSplitter()
+    public function testGetSetSplitter()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+        $splitter = $this->getMock(
+            'CommitMessage_Splitter'
         );
+
+        $this->_object->setSplitter($splitter);
+        $this->assertSame($splitter, $this->_object->getSplitter());
     }
 
     /**
