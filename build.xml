@@ -58,6 +58,15 @@
                dest="lib/"/>
     </target>
 
+    <target name="phpunit">
+        <exec executable="phpunit">
+            <arg value="--coverage-clover=build/coverage.xml "/>
+            <arg value="tests/"/>
+        </exec>
+    </target>
+
+    <target name="integrate" depends="phpunit"/>
+
     <target name="tar" depends="build">
         <!-- i prefer having everything in my tarballs nice and prefixed -->
         <copy file="Specfile" tofile="build/${pkg.name}-${pkg.version}.spec"/>
