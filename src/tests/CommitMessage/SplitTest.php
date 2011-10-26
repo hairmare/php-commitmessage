@@ -46,4 +46,16 @@ class CommitMessage_SplitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($head, $this->_object->getHead());
         $this->assertEquals($body, $this->_object->getBody());
     }
+
+    public function testGetDataWithoutData()
+    {
+        $this->setExpectedException('Exception');
+        $this->_object->getData();
+    }
+
+    public function testSplitWithoutMessage()
+    {
+        $this->setExpectedException('Exception');
+        $this->_object->split();
+    }
 }
