@@ -1,6 +1,9 @@
 <?php
 
-abstract class CommitMessage_Handler_Issue extends CommitMessage_Handler_Abstract
+require_once 'src/CommitMessage/Handler/Abstract.php';
+
+abstract class CommitMessage_Handler_Issue
+    extends CommitMessage_Handler_Abstract
 {
     private $_issueId;
     protected $_redmine;
