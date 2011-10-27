@@ -9,7 +9,6 @@ class Issue extends Redmine_ActiveResource
 class Redmine_Issue_Api
 {
     private $_issue = false;
-    private $_factory = false;
 
     public function find($search, $options = array())
     {
