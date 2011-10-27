@@ -13,7 +13,6 @@ class Redmine_Issue_Api
 
     public function find($search, $options = array())
     {
-throw new Exception('boundary');
         $this->_lazyInit();
         $this->_issue->find($search, $options);
     }

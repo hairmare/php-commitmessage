@@ -47,7 +47,8 @@ class CommitMessage_Handler_IssueChangeStatusTest
             'Redmine_Issue_Api',
             array(
                 'find',
-                'setStatusId'
+                'setStatusId',
+                'setFactory',
             )
         );
 
