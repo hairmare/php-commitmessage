@@ -73,4 +73,10 @@ class CommitMessage_Handler_IssueChangeStatusTest
         $this->_object->setNewStatus(2);
         $this->_object->run();
     }
+
+    public function testRunNoStatusException()
+    {
+        $this->setExpectedException('Exception');
+        $this->_object->run();
+    }
 }
