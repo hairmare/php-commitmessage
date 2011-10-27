@@ -71,4 +71,10 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
         $this->_object->setFactory($factory);
         $this->_object->run();
     }
+
+	public function testInitRedmineMissingFactory()
+	{
+		$this->setExpectedException('Exception');
+		$this->_object->run();
+	}
 }
