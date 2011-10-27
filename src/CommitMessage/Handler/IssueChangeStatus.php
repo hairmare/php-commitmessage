@@ -18,11 +18,13 @@ class CommitMessage_Handler_IssueChangeStatus
             throw new Exception('IssueChangeStatus called without newStatus');
         }
 
-        $this->_initRedmine();
-        $this->_redmine->find($this->getIssueId());
-        $this->_redmine
-             ->set('status_id', $this->_newStatus)
-             ->save();
+        $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
+        $this->_getRedmine()->setFactory($this->getFactory());
+
+        $this->_getRedmine()->setStatusId(
+            $this->_newStatus,
+            $this->getIssueId()
+        );
     }
 }
 

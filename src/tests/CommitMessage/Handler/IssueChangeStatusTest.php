@@ -32,24 +32,44 @@ class CommitMessage_Handler_IssueChangeStatusTest
     }
 
     /**
-     * @todo Implement testSetNewStatus().
-     */
-    public function testSetNewStatus()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @todo Implement testRun().
      */
     public function testRun()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
+        $factory = $this->getMock(
+            'Comittmessage_Factory',
+            array(
+                'createRedmineIssueApi'
+            )
         );
+
+        $redmine = $this->getMock(
+            'Redmine_Issue_Api',
+            array(
+                'find',
+                'setStatusId'
+            )
+        );
+
+        $saver = $this->getMock(
+            'stdClass',
+            array(
+                'save'
+            )
+        );
+
+        $redmine->expects($this->once())
+                ->method('setStatusId')
+                ->with(2)
+                ->will($this->returnValue($saver));
+
+        $factory->expects($this->any())
+                ->method('createRedmineIssueApi')
+                ->will($this->returnValue($redmine));
+
+        $this->_object->setFactory($factory);
+
+        $this->_object->setNewStatus(2);
+        $this->_object->run();
     }
 }

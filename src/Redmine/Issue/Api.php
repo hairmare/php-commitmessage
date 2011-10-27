@@ -13,6 +13,7 @@ class Redmine_Issue_Api
 
     public function find($search, $options = array())
     {
+throw new Exception('boundary');
         $this->_lazyInit();
         $this->_issue->find($search, $options);
     }
@@ -24,11 +25,19 @@ class Redmine_Issue_Api
     {
         return (int) $this->_issue->status['id'];
     }
-    public function addNoteToTicket($note, $ticketId = NULL)
+    public function setStatusId($status, $trackerId = NULL)
     {
         $this->_lazyInit();
-        if (!$ticketId) {
-            $this->_issue->find($ticketId);
+        if (!$trackerId) {
+            $this->_issue->find($trackerId);
+        }
+        return $this->_issue->set('status_id', $status)->save();
+    }
+    public function addNoteToTicket($note, $trackerId = NULL)
+    {
+        $this->_lazyInit();
+        if (!$trackerId) {
+            $this->_issue->find($trackerId);
         }
         $this->_issue->set('notes', $note)->save();
     }
