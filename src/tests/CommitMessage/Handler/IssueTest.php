@@ -65,12 +65,6 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSetRedmine()
     {
-        $factory = $this->getMock(
-            'CommitMessage_Factory',
-            array(
-                'create'
-            )
-        );
         $redmine = $this->getMock('Issue');
         $this->_object->setRedmine($redmine);
         $this->assertEquals($redmine, $this->_object->getRedmine());
