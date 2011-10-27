@@ -188,8 +188,6 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
 
     public function testAnalyseWithIssueBody()
     {
-        $factory = $this->_handlerFactory;
-
         $handlerStack = $this->_initAnalyseForHandlerStack(
             'head',
             'body text with issue #1'
