@@ -1,5 +1,7 @@
 <?php
 
+require_once 'src/CommitMessage/Handler/Issue.php';
+
 class CommitMessage_Handler_IssueChangeStatus
     extends CommitMessage_Handler_Issue
 {

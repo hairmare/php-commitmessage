@@ -36,6 +36,26 @@ class CommitMessage_Handler_IssueDecorateTest
      */
     public function testRun()
     {
+        $factory = $this->getMock(
+            'CommitMessage_Factory',
+            array(
+                'createRedmineIssueApi',
+            )
+        );
+
+        $redmine = $this->getMock(
+            'Redmine_Issue_Api',
+            array(
+                'addNoteToTicket'
+            )
+        );
+
+        $factory->expects($this->once())
+                ->method('createRedmineIssueApi')
+                ->will($this->returnValue($redmine));
+
+        $this->_object->setFactory($factory);
+        $this->_object->run();
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'

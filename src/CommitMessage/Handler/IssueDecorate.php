@@ -9,9 +9,9 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
 {
     public function run()
     {
-        $this->_setRedmine(
-            $this->getFactory()->create('Issue')
-        );
+        $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
+        $this->_getRedmine()->setFactory($this->getFactory());
+
         $this->_getRedmine()->find(
             $this->getIssueId(),
             array(
@@ -23,13 +23,14 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
         $handlerStack = $this->getCaller();
         $analyser = $handlerStack->getCaller();
         $splitter = $analyser->getSplitter();
+
         $head = $splitter->getHead();
         $body = $splitter->getBody();
 
         $note  = "commit: *$head*\n\n";
         $note .= "* http://websvn/url/\n\n<pre>$body</pre>";
 
-        $this->_redmine->set('notes', $note)->save();
+        $this->_getRedmine()->addNoteToTicket($note);
     }
 }
 
