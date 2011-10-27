@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/phpactiveresource-0.14-beta/ActiveResource.php';
+require_once 'lib/phpactiveresource/ActiveResource.php';
 
 class Redmine_ActiveResource extends ActiveResource
 {

@@ -1,0 +1,3 @@
+[submodule "lib/phpactiveresource"]
+	path = lib/phpactiveresource
+	url = git://github.com/lux/phpactiveresource.git
