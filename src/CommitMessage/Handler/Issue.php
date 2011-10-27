@@ -29,6 +29,10 @@ abstract class CommitMessage_Handler_Issue
             $this->_redmine = $this->_factory->createHandler('Issue');
         }
     }
+    protected function _getRedmine()
+    {
+        return $this->_redmine;
+    }
 }
 
 

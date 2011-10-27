@@ -14,7 +14,7 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     {
         // get issue
         $this->_initRedmine();
-        $this->_redmine->find($this->getIssueId());
+        $this->_getRedmine()->find($this->getIssueId());
 
         // check status
         $statusId = (int) $this->_redmine->status['id'];
@@ -25,6 +25,7 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
         if (in_array($statusId, $statusKeys)) {
             $setdev = new CommitMessage_Handler_IssueChangeStatus;
             $setdev->setIssueId($this->getIssueId());
+            $setdev->setFactory($this->_factory);
             $setdev->setNewStatus($statusMap[$statusId]);
             $this->getCaller()->append($setdev);
         }
