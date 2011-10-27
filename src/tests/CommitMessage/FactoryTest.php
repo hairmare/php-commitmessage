@@ -66,4 +66,12 @@ class CommitMessage_FactoryTest
             $this->_object->createHandlerIssueCheck()
         );
     }
+
+    public function testCreateHandlerIssueDecorate()
+    {
+        $this->assertInstanceOf(
+            'CommitMessage_Handler_IssueDecorate',
+            $this->_object->createHandlerIssueDecorate()
+        );
+    }
 }
