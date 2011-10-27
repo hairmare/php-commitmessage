@@ -63,6 +63,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         $this->_handlerFactory = $this->getMock(
             'CommitMessage_Factory'
         );
+
    
         $this->_object->setSplitter($splitter);
         $this->_object->setFactory($this->_handlerFactory);
@@ -187,6 +188,8 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
 
     public function testAnalyseWithIssueBody()
     {
+        $factory = $this->_handlerFactory;
+
         $handlerStack = $this->_initAnalyseForHandlerStack(
             'head',
             'body text with issue #1'
@@ -195,12 +198,16 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         $issuecheck = $this->getMock(
             'CommitMessage_Handler_IssueCheck',
             array(
-                'setIssueId'
+                'setIssueId',
+                'setFactory'
             )
         );
         $issuecheck->expects($this->once())
                    ->method('setIssueId')
                    ->with(1);
+        $issuecheck->expects($this->once())
+                   ->method('setFactory')
+                   ->with($factory);
 
         $issuedecorate = $this->getMock(
             'CommitMessage_Handler_IssueDecorate',
@@ -211,6 +218,9 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         $issuedecorate->expects($this->once())
                       ->method('setIssueId')
                       ->with(1);
+        $issuedecorate->expects($this->once())
+                      ->method('setFactory')
+                      ->with($factory);
 
         $onConsecutiveCalls = $this->onConsecutiveCalls(
             $issuecheck,
