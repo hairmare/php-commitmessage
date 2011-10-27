@@ -62,13 +62,13 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
 
         $this->_factory = $this->getMock(
             'CommitMessage_Factory',
-			array(
-				'createRedmineIssueApi',
-				'createHandlerWarnMissingText',
-				'createHandlerIssueChangeStatus',
-				'createHandlerIssueCheck',
-				'createHandlerIssueDecorate'
-			)
+            array(
+                'createRedmineIssueApi',
+                'createHandlerWarnMissingText',
+                'createHandlerIssueChangeStatus',
+                'createHandlerIssueCheck',
+                'createHandlerIssueDecorate'
+            )
         );
 
    

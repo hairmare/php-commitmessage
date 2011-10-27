@@ -37,9 +37,9 @@ class Redmine_Issue_Api
     }
     private function _lazyInit()
     {
-	if (!$this->_issue) {
-        	$this->_issue = new Issue;
-	}
+        if (!$this->_issue) {
+            $this->_issue = new Issue;
+        }
     }
 
 }
