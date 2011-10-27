@@ -39,24 +39,12 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetIssueId().
      */
-    public function testSetIssueId()
+    public function testGetSetIssueId()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetIssueId().
-     */
-    public function testGetIssueId()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $issueId = 1234;
+        
+        $this->_object->setIssueId($issueId);
+        $this->assertEquals($issueId, $this->_object->getIssueId($issueId));
     }
 }
