@@ -5,7 +5,7 @@
  */
 class CommitMessage_Factory
 {
-    public function createHandler($classname)
+    public function create($classname)
     {
         return new $classname;
     }

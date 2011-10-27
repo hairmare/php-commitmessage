@@ -25,11 +25,11 @@ class CommitMessage_FactoryTest extends PHPUnit_Framework_TestCase
     /**
      * check factory method
      */
-    public function testCreateHandler()
+    public function testCreate()
     {
         $this->assertInstanceOf(
             'stdClass', 
-            $this->_object->createHandler(
+            $this->_object->create(
                 'stdClass'
             )
         );

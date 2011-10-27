@@ -26,7 +26,7 @@ abstract class CommitMessage_Handler_Issue
             if (!$this->_factory) {
                 throw new Exception('Called _initRedmine() without a _factory.');
             }
-            $this->_redmine = $this->_factory->createHandler('Issue');
+            $this->_redmine = $this->_factory->create('Issue');
         }
     }
     protected function _getRedmine()

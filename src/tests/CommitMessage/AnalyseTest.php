@@ -150,7 +150,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->_handlerFactory->expects($this->once())
-                              ->method('createHandler')
+                              ->method('create')
                               ->will($returnValue);
 
         $isInstanceOf = $this->isInstanceOf(
@@ -173,7 +173,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->_handlerFactory->expects($this->once())
-                              ->method('createHandler')
+                              ->method('create')
                               ->will($returnValue);
 
         $isInstanceOf = $this->isInstanceOf(
@@ -224,7 +224,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             $issuedecorate
         );
         $this->_handlerFactory->expects($this->any())
-                              ->method('createHandler')
+                              ->method('create')
                               ->will($onConsecutiveCalls);
 
         $handlerStack->expects($this->exactly(2))

@@ -53,7 +53,7 @@ class CommitMessage_Analyse
     {
         if (empty($head)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->createHandler(
+                $this->_handlerFactory->create(
                     'CommitMessage_Handler_WarnMissingText'
                 )
             );
@@ -63,7 +63,7 @@ class CommitMessage_Analyse
     {
         if (empty($body)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->createHandler(
+                $this->_handlerFactory->create(
                     'CommitMessage_Handler_WarnMissingText'
                 )
             );
@@ -72,13 +72,13 @@ class CommitMessage_Analyse
         foreach ($matches[0] AS $match) {
             $issueId = substr($match, 1);
 
-            $check = $this->_handlerFactory->createHandler(
+            $check = $this->_handlerFactory->create(
                 'CommitMessage_Handler_IssueCheck'
             );
             $check->setIssueId($issueId);
             $check->setFactory($this->_handlerFactory);
 
-            $decorate = $this->_handlerFactory->createHandler(
+            $decorate = $this->_handlerFactory->create(
                 'CommitMessage_Handler_IssueDecorate'
             );
             $decorate->setIssueId($issueId);

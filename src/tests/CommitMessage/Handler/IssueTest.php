@@ -59,12 +59,12 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
         $factory = $this->getMock(
             'CommitMessage_Factory',
             array(
-                'createHandler'
+                'create'
             )
         );
         $redmine = $this->getMock('Issue');
         $factory->expects($this->once())
-                ->method('createHandler')
+                ->method('create')
                 ->with('Issue')
                 ->will($this->returnValue($redmine));
 
