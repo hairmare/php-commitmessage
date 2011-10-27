@@ -83,6 +83,7 @@ class CommitMessage_Analyse
             );
             $decorate->setIssueId($issueId);
             $decorate->setFactory($this->_factory);
+            $decorate->setSplitter($this->getSplitter());
 
             $this->_appendHandlerStack(
                 array(

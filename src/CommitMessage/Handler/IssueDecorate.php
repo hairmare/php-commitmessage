@@ -7,6 +7,15 @@ require_once 'src/CommitMessage/Handler/Issue.php';
  */
 class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
 {
+    private $_splitter = false;
+    public function setSplitter($splitter)
+    {
+        $this->_splitter = $splitter;
+    }
+    private function _getSplitter()
+    {
+        return $this->_splitter;
+    }
     public function run()
     {
         $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
@@ -19,10 +28,7 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
             )
         );
 
-        // hmm... not as pretty as it should be does the job
-        $handlerStack = $this->getCaller();
-        $analyser = $handlerStack->getCaller();
-        $splitter = $analyser->getSplitter();
+        $splitter = $this->_getSplitter();
 
         $head = $splitter->getHead();
         $body = $splitter->getBody();
@@ -33,5 +39,4 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
         $this->_getRedmine()->addNoteToTicket($note);
     }
 }
-
 

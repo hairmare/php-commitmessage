@@ -36,6 +36,13 @@ class CommitMessage_Handler_IssueDecorateTest
      */
     public function testRun()
     {
+        $caller = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array(
+                'getIssueId',
+            )
+        );
+
         $factory = $this->getMock(
             'CommitMessage_Factory',
             array(
@@ -50,15 +57,22 @@ class CommitMessage_Handler_IssueDecorateTest
             )
         );
 
+        $splitter = $this->getMock(
+            'CommitMessage_Splitter',
+            array(
+                'getHead',
+                'getBody'
+            )
+        );
+
         $factory->expects($this->once())
                 ->method('createRedmineIssueApi')
                 ->will($this->returnValue($redmine));
 
+        $this->_object->setCaller($caller);
         $this->_object->setFactory($factory);
+        $this->_object->setSplitter($splitter);
+        $this->_object->setIssueId(1);
         $this->_object->run();
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
     }
 }
