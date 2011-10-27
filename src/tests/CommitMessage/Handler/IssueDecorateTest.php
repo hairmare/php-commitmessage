@@ -54,7 +54,8 @@ class CommitMessage_Handler_IssueDecorateTest
             'Redmine_Issue_Api',
             array(
                 'find',
-                'addNoteToTicket'
+                'addNoteToTicket',
+                'setFactory'
             )
         );
 

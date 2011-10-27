@@ -53,7 +53,8 @@ class CommitMessage_Handler_IssueCheckTest extends PHPUnit_Framework_TestCase
             'Redmine_Issue_Api',
             array(
                 'find',
-                'getStatusId'
+                'getStatusId',
+                'setFactory'
             )
         );
         $issue->expects($this->once())
