@@ -8,7 +8,7 @@
 
 require_once 'src/CommitMessage/Split.php';
 require_once 'src/CommitMessage/Analyse.php';
-require_once 'src/CommitMessage/HandlerFactory.php';
+require_once 'src/CommitMessage/Factory.php';
 require_once 'src/CommitMessage/HandlerStack.php';
 require_once 'src/CommitMessage/Handler/Issue.php';
 require_once 'src/CommitMessage/Handler/IssueCheck.php';
@@ -58,16 +58,18 @@ $splitter = new CommitMessage_Split;
 $splitter->setMessage($test);
 $splitter->split();
 
+$factory = new CommitMessage_Factory;
+
 // a stack of needed treatments to the message
 $handlerStack = new CommitMessage_HandlerStack;
+$handlerStack->setFactory($factory);
 
-$handlerFactory = new CommitMessage_handlerFactory;
 
 // that will be filled with stuff while analysing
 $analyser = new CommitMessage_Analyse;
 $analyser->setSplitter($splitter);
 $analyser->setHandlerStack($handlerStack);
-$analyser->setHandlerFactory($handlerFactory);
+$analyser->setFactory($factory);
 $analyser->analyse();
 
 // last we execute all the stuff on the handler stack

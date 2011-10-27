@@ -13,7 +13,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     protected $_object;
 
-    protected $_handlerFactory = false;
+    protected $_factory = false;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -30,7 +30,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->_handlerFactory = false;
+        $this->_factory = false;
     }
 
     private function _initAnalyseForHandlerStack($head, $body)
@@ -60,13 +60,13 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->_handlerFactory = $this->getMock(
+        $this->_factory = $this->getMock(
             'CommitMessage_Factory'
         );
 
    
         $this->_object->setSplitter($splitter);
-        $this->_object->setFactory($this->_handlerFactory);
+        $this->_object->setFactory($this->_factory);
         $this->_object->setHandlerStack($handlerStack);
 
         return $handlerStack;
@@ -149,7 +149,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                 'CommitMessage_Handler_WarnMissingText'
             )
         );
-        $this->_handlerFactory->expects($this->once())
+        $this->_factory->expects($this->once())
                               ->method('create')
                               ->will($returnValue);
 
@@ -172,7 +172,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                 'CommitMessage_Handler_WarnMissingText'
             )
         );
-        $this->_handlerFactory->expects($this->once())
+        $this->_factory->expects($this->once())
                               ->method('create')
                               ->will($returnValue);
 
@@ -223,9 +223,9 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             $issuecheck,
             $issuedecorate
         );
-        $this->_handlerFactory->expects($this->any())
-                              ->method('create')
-                              ->will($onConsecutiveCalls);
+        $this->_factory->expects($this->any())
+                       ->method('create')
+                       ->will($onConsecutiveCalls);
 
         $handlerStack->expects($this->exactly(2))
                      ->method('append');

@@ -6,11 +6,16 @@ class Concrete_CommitMessage_Handler_Issue
     extends CommitMessage_Handler_Issue
 {
     /**
-     * method fullfills interface demands and allows testing _initRedmine()
      */
     public function run()
     {
-        $this->_initRedmine();
+    }
+    /**
+     * expose protected
+     */
+    public function setRedmine($redmine)
+    {
+        return $this->_setRedmine($redmine);
     }
 }
 
@@ -54,7 +59,7 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
 
     /**
      */
-    public function testInitRedmine()
+    public function testsetRedmine()
     {
         $factory = $this->getMock(
             'CommitMessage_Factory',
@@ -63,18 +68,15 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
             )
         );
         $redmine = $this->getMock('Issue');
-        $factory->expects($this->once())
-                ->method('create')
-                ->with('Issue')
-                ->will($this->returnValue($redmine));
-
-        $this->_object->setFactory($factory);
-        $this->_object->run();
+        $this->_object->setRedmine($redmine);
     }
 
-    public function testInitRedmineMissingFactory()
+    public function testGetSetFactory()
     {
-        $this->setExpectedException('Exception');
-        $this->_object->run();
+        $factory = $this->getMock('CommitMessage_Factory');
+
+        $this->_object->setFactory($factory);
+
+        $this->assertEquals($factory, $this->_object->getFactory());
     }
 }

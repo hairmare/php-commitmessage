@@ -20,14 +20,13 @@ abstract class CommitMessage_Handler_Issue
     {
         $this->_factory = $factory;
     }
-    protected function _initRedmine()
+    public function getFactory()
     {
-        if (empty($this->_redmine)) {
-            if (!$this->_factory) {
-                throw new Exception('Called _initRedmine() without a _factory.');
-            }
-            $this->_redmine = $this->_factory->create('Issue');
-        }
+        return $this->_factory;
+    }
+    protected function _setRedmine($redmine)
+    {
+        $this->_redmine = $redmine;
     }
     protected function _getRedmine()
     {

@@ -47,11 +47,21 @@ class CommitMessage_HandlerStackTest extends PHPUnit_Framework_TestCase
      */
     public function testAppend()
     {
-        $data = $this->getMock('stdClass', array('setCaller'));
+        $data = $this->getMock(
+        'stdClass',
+            array(
+                'setCaller',
+                'setFactory'
+            )
+        );
         $data->expects($this->once())
              ->method('setCaller')
              ->with($this->isInstanceOf($this->_object));
+        $data->expects($this->once())
+             ->method('setFactory')
+             ->with($this->isInstanceOf('CommitMessage_Factory'));
 
+        $this->_object->setFactory($this->getMock('CommitMessage_Factory'));
         $this->_object->append($data);
     }
 
@@ -63,6 +73,7 @@ class CommitMessage_HandlerStackTest extends PHPUnit_Framework_TestCase
             'stdClass',
             array(
                 'setCaller',
+                'setFactory',
                 'run'
             )
         );
@@ -70,8 +81,12 @@ class CommitMessage_HandlerStackTest extends PHPUnit_Framework_TestCase
                 ->method('setCaller')
                 ->with($this->isInstanceOf($this->_object));
         $handler->expects($this->once())
+                ->method('setFactory')
+                ->with($this->isInstanceOf('CommitMessage_Factory'));
+        $handler->expects($this->once())
                 ->method('run');
 
+        $this->_object->setFactory($this->getMock('CommitMessage_Factory'));
         $this->_object->append($handler);
         $this->_object->run();
     }

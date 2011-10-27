@@ -13,7 +13,7 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     public function run() 
     {
         // get issue
-        $this->_initRedmine();
+        $this->_setRedmine($this->getFactory()->create('Issue'));
         $this->_getRedmine()->find($this->getIssueId());
 
         // check status

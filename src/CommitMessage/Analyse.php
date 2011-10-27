@@ -9,7 +9,7 @@ class CommitMessage_Analyse
 {
     private $_splitter = false;
     private $_handlerStack = false;
-    private $_handlerFactory = false;
+    private $_factory = false;
     public function setSplitter($splitter)
     {
         $this->_splitter = $splitter;
@@ -23,9 +23,9 @@ class CommitMessage_Analyse
         $handlerStack->setCaller($this);
         $this->_handlerStack = $handlerStack;
     }
-    public function setFactory($handlerFactory)
+    public function setFactory($factory)
     {
-        $this->_handlerFactory = $handlerFactory;
+        $this->_factory = $factory;
     }
     public function analyse()
     {
@@ -39,9 +39,9 @@ class CommitMessage_Analyse
                 'please set a handlerStack before calling analyse()'
             );
         }
-        if (!$this->_handlerFactory) {
+        if (!$this->_factory) {
             throw new Exception(
-                'please set a handlerFactory before calling analyse()'
+                'please set a factory before calling analyse()'
             );
         }
         $data = $this->_splitter->getData();
@@ -53,7 +53,7 @@ class CommitMessage_Analyse
     {
         if (empty($head)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->create(
+                $this->_factory->create(
                     'CommitMessage_Handler_WarnMissingText'
                 )
             );
@@ -63,7 +63,7 @@ class CommitMessage_Analyse
     {
         if (empty($body)) {
             $this->_appendHandlerStack(
-                $this->_handlerFactory->create(
+                $this->_factory->create(
                     'CommitMessage_Handler_WarnMissingText'
                 )
             );
@@ -72,17 +72,17 @@ class CommitMessage_Analyse
         foreach ($matches[0] AS $match) {
             $issueId = substr($match, 1);
 
-            $check = $this->_handlerFactory->create(
+            $check = $this->_factory->create(
                 'CommitMessage_Handler_IssueCheck'
             );
             $check->setIssueId($issueId);
-            $check->setFactory($this->_handlerFactory);
+            $check->setFactory($this->_factory);
 
-            $decorate = $this->_handlerFactory->create(
+            $decorate = $this->_factory->create(
                 'CommitMessage_Handler_IssueDecorate'
             );
             $decorate->setIssueId($issueId);
-            $decorate->setFactory($this->_handlerFactory);
+            $decorate->setFactory($this->_factory);
 
             $this->_appendHandlerStack(
                 array(

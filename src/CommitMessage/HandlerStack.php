@@ -6,6 +6,7 @@
 class CommitMessage_HandlerStack extends ArrayObject
 {
     private $_caller = false;
+    private $_factory = false;
     public function setCaller($caller)
     {
         if ($this->_caller) {
@@ -17,6 +18,10 @@ class CommitMessage_HandlerStack extends ArrayObject
     {
         return $this->_caller;
     }
+    public function setFactory($factory)
+    {
+        $this->_factory = $factory;
+    }
     public function run()
     {
         foreach ($this AS $handler) {
@@ -26,6 +31,7 @@ class CommitMessage_HandlerStack extends ArrayObject
     public function append($data)
     {
         $data->setCaller($this);
+        $data->setFactory($this->_factory);
         return parent::append($data);
     }
 }
