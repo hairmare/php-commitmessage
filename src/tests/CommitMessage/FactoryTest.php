@@ -50,4 +50,20 @@ class CommitMessage_FactoryTest
             $this->_object->createHandlerIssueChangeStatus()
         );
     }
+
+    public function testCreateHandlerWarnMissingText()
+    {
+        $this->assertInstanceOf(
+            'CommitMessage_Handler_WarnMissingText',
+            $this->_object->createHandlerWarnMissingText()
+        );
+    }
+
+    public function testCreateHandlerIssueCheck()
+    {
+        $this->assertInstanceOf(
+            'CommitMessage_Handler_IssueCheck',
+            $this->_object->createHandlerIssueCheck()
+        );
+    }
 }

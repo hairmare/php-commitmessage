@@ -53,9 +53,7 @@ class CommitMessage_Analyse
     {
         if (empty($head)) {
             $this->_appendHandlerStack(
-                $this->_factory->create(
-                    'CommitMessage_Handler_WarnMissingText'
-                )
+                $this->_factory->createHandlerWarnMissingText()
             );
         }
     }
@@ -63,24 +61,18 @@ class CommitMessage_Analyse
     {
         if (empty($body)) {
             $this->_appendHandlerStack(
-                $this->_factory->create(
-                    'CommitMessage_Handler_WarnMissingText'
-                )
+                $this->_factory->createHandlerWarnMissingText()
             );
         }
         preg_match_all('/#[0-9]+/', $body, $matches);
         foreach ($matches[0] AS $match) {
             $issueId = substr($match, 1);
 
-            $check = $this->_factory->create(
-                'CommitMessage_Handler_IssueCheck'
-            );
+            $check = $this->_factory->createHandlerIssueCheck();
             $check->setIssueId($issueId);
             $check->setFactory($this->_factory);
 
-            $decorate = $this->_factory->create(
-                'CommitMessage_Handler_IssueDecorate'
-            );
+            $decorate = $this->_factory->createHandlerIssueDecorate();
             $decorate->setIssueId($issueId);
             $decorate->setFactory($this->_factory);
             $decorate->setSplitter($this->getSplitter());

@@ -15,7 +15,6 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     {
         // initialize issue api
         $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
-        $this->_getRedmine()->setFactory($this->getFactory());
 
         // get issue
         $this->_getRedmine()->find($this->getIssueId());

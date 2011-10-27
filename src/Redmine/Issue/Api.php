@@ -16,10 +16,6 @@ class Redmine_Issue_Api
         $this->_lazyInit();
         $this->_issue->find($search, $options);
     }
-    public function setFactory($factory)
-    {
-        $this->_factory = $factory;
-    }
     public function getStatusId()
     {
         return (int) $this->_issue->status['id'];
@@ -42,12 +38,9 @@ class Redmine_Issue_Api
     }
     private function _lazyInit()
     {
-        if (!$this->_factory) {
-            throw new Exception('Call setFactory() first.');
-        }
-        if (!$this->_issue) {
-            $this->_issue = $this->_factory->create('Issue');
-        }
+	if (!$this->_issue) {
+        	$this->_issue = new Issue;
+	}
     }
 
 }

@@ -61,7 +61,14 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         );
 
         $this->_factory = $this->getMock(
-            'CommitMessage_Factory'
+            'CommitMessage_Factory',
+			array(
+				'createRedmineIssueApi',
+				'createHandlerWarnMissingText',
+				'createHandlerIssueChangeStatus',
+				'createHandlerIssueCheck',
+				'createHandlerIssueDecorate'
+			)
         );
 
    
@@ -150,7 +157,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->_factory->expects($this->once())
-                              ->method('create')
+                              ->method('createHandlerWarnMissingText')
                               ->will($returnValue);
 
         $isInstanceOf = $this->isInstanceOf(
@@ -173,7 +180,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->_factory->expects($this->once())
-                              ->method('create')
+                              ->method('createHandlerWarnMissingText')
                               ->will($returnValue);
 
         $isInstanceOf = $this->isInstanceOf(
@@ -219,13 +226,13 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         $issuedecorate->expects($this->once())
                       ->method('setFactory');
 
-        $onConsecutiveCalls = $this->onConsecutiveCalls(
-            $issuecheck,
-            $issuedecorate
-        );
         $this->_factory->expects($this->any())
-                       ->method('create')
-                       ->will($onConsecutiveCalls);
+                       ->method('createHandlerIssueCheck')
+                       ->will($this->returnValue($issuecheck));
+
+        $this->_factory->expects($this->any())
+                       ->method('createHandlerIssueDecorate')
+                       ->will($this->returnValue($issuedecorate));
 
         $handlerStack->expects($this->exactly(2))
                      ->method('append');

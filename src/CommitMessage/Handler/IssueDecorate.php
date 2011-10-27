@@ -19,7 +19,6 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
     public function run()
     {
         $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
-        $this->_getRedmine()->setFactory($this->getFactory());
 
         $this->_getRedmine()->find(
             $this->getIssueId(),
@@ -36,7 +35,7 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
         $note  = "commit: *$head*\n\n";
         $note .= "* http://websvn/url/\n\n<pre>$body</pre>";
 
-        $this->_getRedmine()->addNoteToTicket($note);
+        $this->_getRedmine()->addNoteToTicket($note, $this->getIssueId());
     }
 }
 

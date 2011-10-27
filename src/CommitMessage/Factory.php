@@ -5,17 +5,14 @@
  */
 class CommitMessage_Factory
 {
-    /**
-     * @obsolete
-     */
-    public function create($classname)
-    {
-        return $this->_create($classname);
-    }
-
     public function createRedmineIssueApi()
     {
         return new Redmine_Issue_Api;
+    }
+
+    public function createHandlerWarnMissingText()
+    {
+        return new CommitMessage_Handler_WarnMissingText;
     }
 
     public function createHandlerIssueChangeStatus()
@@ -23,8 +20,13 @@ class CommitMessage_Factory
         return new CommitMessage_Handler_IssueChangeStatus;
     }
 
-    private function _create($classname)
+    public function createHandlerIssueCheck()
     {
-        return new $classname;
+        return new CommitMessage_Handler_IssueCheck;
+    }
+
+    public function createHandlerIssueDecorate()
+    {
+        return new CommitMessage_Handler_IssueDecorate;
     }
 }
