@@ -6,6 +6,14 @@
  * the redmine instance with the other tools needed for the job.
  */
 
+/* active resource gets include here so i can haz clean
+ * coverge in builds. This should be in ActiveResource.php
+ * and it will get removed when i do autoloading anyhow.
+ */
+require_once 'lib/phpactiveresource/ActiveResource.php';
+
+/* these are my own working, they to need autoloading
+ */
 require_once 'src/CommitMessage/Split.php';
 require_once 'src/CommitMessage/Analyse.php';
 require_once 'src/CommitMessage/Factory.php';
@@ -15,19 +23,7 @@ require_once 'src/CommitMessage/Handler/IssueCheck.php';
 require_once 'src/CommitMessage/Handler/IssueDecorate.php';
 require_once 'src/CommitMessage/Handler/IssueChangeStatus.php';
 
-
-require_once('lib/phpactiveresource-0.14-beta/ActiveResource.php');
-
-class Redmine extends ActiveResource
-{
-    var $site = 'http://b3126476278c49215556ed00592bd331bb8e65d3:@192.168.1.109:3000/';
-    var $request_format = 'xml';
-}
-class Issue extends Redmine {}
-
 // testing...
-
-
 $test = 'ich commit mal was...
 
 in richtigem format und mit issue #27';
