@@ -10,8 +10,7 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
     public function run()
     {
         $this->_setRedmine(
-            $this->getFactory()
-                 ->create('Issue')
+            $this->getFactory()->create('Issue')
         );
         $this->_getRedmine()->find(
             $this->getIssueId(),
