@@ -48,7 +48,7 @@ class CommitMessage_HandlerStackTest extends PHPUnit_Framework_TestCase
     public function testAppend()
     {
         $data = $this->getMock(
-        'stdClass',
+            'stdClass',
             array(
                 'setCaller',
                 'setFactory'
