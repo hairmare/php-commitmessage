@@ -5,8 +5,9 @@ require_once 'src/CommitMessage/Handler/Abstract.php';
 abstract class CommitMessage_Handler_Issue
     extends CommitMessage_Handler_Abstract
 {
-    private $_issueId;
     protected $_redmine;
+    private $_issueId;
+    private $_factory = false;
     public function setIssueId($issueId)
     {
         $this->_issueId = $issueId;
@@ -15,9 +16,18 @@ abstract class CommitMessage_Handler_Issue
     {
         return $this->_issueId;
     }
+    public function setFactory($factory)
+    {
+        $this->_factory = $factory;
+    }
     protected function _initRedmine()
     {
-        if (empty($this->_redmine)) $this->_redmine = new Issue;
+        if (empty($this->_redmine)) {
+            if (!$this->_factory) {
+                throw new Exception('Called _initRedmine() without a _factory.');
+            }
+            $this->_redmine = $this->_factory->createHandler('Issue');
+        }
     }
 }
 

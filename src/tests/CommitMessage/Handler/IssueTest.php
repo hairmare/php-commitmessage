@@ -5,8 +5,12 @@ require_once 'src/CommitMessage/Handler/Issue.php';
 class Concrete_CommitMessage_Handler_Issue
     extends CommitMessage_Handler_Issue
 {
+    /**
+     * method fullfills interface demands and allows testing _initRedmine()
+     */
     public function run()
     {
+        $this->_initRedmine();
     }
 }
 
@@ -46,5 +50,25 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
         
         $this->_object->setIssueId($issueId);
         $this->assertEquals($issueId, $this->_object->getIssueId($issueId));
+    }
+
+    /**
+     */
+    public function testInitRedmine()
+    {
+        $factory = $this->getMock(
+            'CommitMessage_Factory',
+            array(
+                'createHandler'
+            )
+        );
+        $redmine = $this->getMock('Issue');
+        $factory->expects($this->once())
+                ->method('createHandler')
+                ->with('Issue')
+                ->will($this->returnValue($redmine));
+
+        $this->_object->setFactory($factory);
+        $this->_object->run();
     }
 }

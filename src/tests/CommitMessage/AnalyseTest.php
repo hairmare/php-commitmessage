@@ -206,21 +206,20 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
                    ->method('setIssueId')
                    ->with(1);
         $issuecheck->expects($this->once())
-                   ->method('setFactory')
-                   ->with($factory);
+                   ->method('setFactory');
 
         $issuedecorate = $this->getMock(
             'CommitMessage_Handler_IssueDecorate',
             array(
-                'setIssueId'
+                'setIssueId',
+                'setFactory'
             )
         );
         $issuedecorate->expects($this->once())
                       ->method('setIssueId')
                       ->with(1);
         $issuedecorate->expects($this->once())
-                      ->method('setFactory')
-                      ->with($factory);
+                      ->method('setFactory');
 
         $onConsecutiveCalls = $this->onConsecutiveCalls(
             $issuecheck,

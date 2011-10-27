@@ -76,11 +76,13 @@ class CommitMessage_Analyse
                 'CommitMessage_Handler_IssueCheck'
             );
             $check->setIssueId($issueId);
+            $check->setFactory($this->_handlerFactory);
 
             $decorate = $this->_handlerFactory->createHandler(
                 'CommitMessage_Handler_IssueDecorate'
             );
             $decorate->setIssueId($issueId);
+            $decorate->setFactory($this->_handlerFactory);
 
             $this->_appendHandlerStack(
                 array(
