@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/CommitMessage/Handler/Issue.php';
+require_once 'src/Redmine/Issue/Api.php';
 
 /**
  * look if issue is in db
@@ -12,12 +13,15 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     );
     public function run() 
     {
+        // initialize issue api
+        $this->_setRedmine($this->getFactory()->create('Redmine_Issue_Api'));
+        $this->_getRedmine()->setFactory($this->getFactory());
+
         // get issue
-        $this->_setRedmine($this->getFactory()->create('Issue'));
         $this->_getRedmine()->find($this->getIssueId());
 
         // check status
-        $statusId = (int) $this->_redmine->status['id'];
+        $statusId = $this->_getRedmine()->getStatusId();
 
         // change status if needed
         $statusMap = $this->_statusMap;
