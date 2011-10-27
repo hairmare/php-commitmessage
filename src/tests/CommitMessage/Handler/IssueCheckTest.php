@@ -3,7 +3,9 @@
 require_once 'src/CommitMessage/Handler/IssueCheck.php';
 
 // this is dirty, i need to integrate activeresource tests, they exist!
-class ActiveResource {}
+class ActiveResource
+{
+}
 
 /**
  * Test class for CommitMessage_Handler_IssueCheck.

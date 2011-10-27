@@ -2,10 +2,12 @@
 
 require_once 'src/Redmine/ActiveResource.php';
 
-class Issue extends Redmine_ActiveResource {}
+class Issue extends Redmine_ActiveResource
+{
+}
 
-class Redmine_Issue_Api {
-
+class Redmine_Issue_Api
+{
     private $_issue = false;
     private $_factory = false;
 
