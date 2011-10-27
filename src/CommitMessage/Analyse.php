@@ -23,7 +23,7 @@ class CommitMessage_Analyse
         $handlerStack->setCaller($this);
         $this->_handlerStack = $handlerStack;
     }
-    public function setHandlerFactory($handlerFactory)
+    public function setFactory($handlerFactory)
     {
         $this->_handlerFactory = $handlerFactory;
     }

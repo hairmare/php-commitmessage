@@ -61,11 +61,11 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
         );
 
         $this->_handlerFactory = $this->getMock(
-            'CommitMessage_HandlerFactory'
+            'CommitMessage_Factory'
         );
    
         $this->_object->setSplitter($splitter);
-        $this->_object->setHandlerFactory($this->_handlerFactory);
+        $this->_object->setFactory($this->_handlerFactory);
         $this->_object->setHandlerStack($handlerStack);
 
         return $handlerStack;
@@ -122,7 +122,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
     /**
      * test missing handler factory
      */
-    public function testAnalyseMissingHandlerFactory()
+    public function testAnalyseMissingFactory()
     {
         $this->setExpectedException('Exception');
         $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
