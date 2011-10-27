@@ -35,9 +35,28 @@ class CommitMessage_Handler_IssueCheckTest extends PHPUnit_Framework_TestCase
      */
     public function testRun()
     {
+        $factory = $this->getMock(
+            'CommitMessage_Factory',
+            array (
+                'create'
+            )
+        );
+        $issue = $this->getMock(
+            'Issue',
+            array(
+                'find'
+            )
+        );
+        $factory->expects($this->any())
+                ->method('create')
+                ->with('Issue')
+                ->will($this->returnValue($issue));
+
+        $this->_object->setFactory($factory);
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
+        $this->_object->run();
     }
 }
