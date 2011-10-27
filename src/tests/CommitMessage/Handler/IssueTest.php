@@ -17,6 +17,10 @@ class Concrete_CommitMessage_Handler_Issue
     {
         return $this->_setRedmine($redmine);
     }
+    public function getRedmine()
+    {
+        return $this->_getRedmine();
+    }
 }
 
 /**
@@ -59,7 +63,7 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
 
     /**
      */
-    public function testsetRedmine()
+    public function testGetSetRedmine()
     {
         $factory = $this->getMock(
             'CommitMessage_Factory',
@@ -69,6 +73,7 @@ class CommitMessage_Handler_IssueTest extends PHPUnit_Framework_TestCase
         );
         $redmine = $this->getMock('Issue');
         $this->_object->setRedmine($redmine);
+        $this->assertEquals($redmine, $this->_object->getRedmine());
     }
 
     public function testGetSetFactory()
