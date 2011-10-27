@@ -14,7 +14,7 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
     public function run() 
     {
         // initialize issue api
-        $this->_setRedmine($this->getFactory()->create('Redmine_Issue_Api'));
+        $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
         $this->_getRedmine()->setFactory($this->getFactory());
 
         // get issue
@@ -27,9 +27,9 @@ class CommitMessage_Handler_IssueCheck extends CommitMessage_Handler_Issue
         $statusMap = $this->_statusMap;
         $statusKeys = array_keys($statusMap);
         if (in_array($statusId, $statusKeys)) {
-            $setdev = new CommitMessage_Handler_IssueChangeStatus;
+            $setdev = $this->getFactory()->createHandlerIssueChangeStatus();
             $setdev->setIssueId($this->getIssueId());
-            $setdev->setFactory($this->_factory);
+            $setdev->setFactory($this->getFactory());
             $setdev->setNewStatus($statusMap[$statusId]);
             $this->getCaller()->append($setdev);
         }

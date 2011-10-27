@@ -35,28 +35,49 @@ class CommitMessage_Handler_IssueCheckTest extends PHPUnit_Framework_TestCase
      */
     public function testRun()
     {
+        $caller = $this->getMock(
+            'CommitMessage_HandlerStack',
+            array(
+                'append'
+            )
+        );
+
         $factory = $this->getMock(
             'CommitMessage_Factory',
             array (
-                'create'
+                'createRedmineIssueApi',
+                'createHandlerIssueChangeStatus'
             )
         );
         $issue = $this->getMock(
-            'Issue',
+            'Redmine_Issue_Api',
             array(
-                'find'
+                'find',
+                'getStatusId'
             )
         );
-        $factory->expects($this->any())
-                ->method('create')
-                ->with('Issue')
+        $issue->expects($this->once())
+              ->method('getStatusId')
+              ->will($this->returnValue(1));
+
+        $statuschange = $this->getMock(
+            'CommitMessage_Handler_IssueChangeStatus',
+            array(
+                'setIssueId',
+                'setFactory',
+                'setNewStatus'
+            )
+        );
+        $factory->expects($this->once())
+                ->method('createRedmineIssueApi')
                 ->will($this->returnValue($issue));
 
+        $factory->expects($this->once())
+                ->method('createHandlerIssueChangeStatus')
+                ->will($this->returnValue($statuschange));
+
+        $this->_object->setCaller($caller);
         $this->_object->setFactory($factory);
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
         $this->_object->run();
     }
 }
