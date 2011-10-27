@@ -4,10 +4,11 @@ class Redmine_Issue_Api {
 
     private $_issue = false;
     private $_factory = false;
-    public function find($id)
+
+    public function find($search)
     {
         $this->_lazyInit();
-        $this->_issue->find($id);
+        $this->_issue->find($search);
     }
     public function getStatusId()
     {
