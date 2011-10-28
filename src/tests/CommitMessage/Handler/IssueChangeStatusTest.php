@@ -70,7 +70,7 @@ class CommitMessage_Handler_IssueChangeStatusTest
 
         $this->_object->setFactory($factory);
 
-	$this->_object->setIssueId(1);
+        $this->_object->setIssueId(1);
         $this->_object->setNewStatus(2);
         $this->_object->run();
     }
@@ -78,6 +78,13 @@ class CommitMessage_Handler_IssueChangeStatusTest
     public function testRunNoStatusException()
     {
         $this->setExpectedException('Exception');
+        $this->_object->run();
+    }
+
+    public function testRunNoIssueException()
+    {
+        $this->setExpectedException('Exception');
+        $this->_object->setIssueId(1);
         $this->_object->run();
     }
 }
