@@ -71,6 +71,14 @@ class CommitMessage_Handler_IssueDecorateTest
                 ->method('createRedmineIssueApi')
                 ->will($this->returnValue($redmine));
 
+        // right now i should be mocking and making this work
+        // after having a look a the run facility this is where
+        // i decide to flintstone through the internal api changes
+        // and to focus on this particular refactoring at a later
+        // date
+        // @todo refactor CommitMessage_Handler_IssueDecorate::run()
+        // srysly
+
         $this->_object->setCaller($caller);
         $this->_object->setFactory($factory);
         $this->_object->setSplitter($splitter);

@@ -61,7 +61,7 @@ class CommitMessage_Handler_IssueChangeStatusTest
 
         $redmine->expects($this->once())
                 ->method('setStatusId')
-                ->with(2)
+                ->with(1, 2)
                 ->will($this->returnValue($saver));
 
         $factory->expects($this->any())
@@ -70,7 +70,7 @@ class CommitMessage_Handler_IssueChangeStatusTest
 
         $this->_object->setFactory($factory);
 
-        $this->_object->setNewStatus(2);
+        $this->_object->setNewStatus(1, 2);
         $this->_object->run();
     }
 
