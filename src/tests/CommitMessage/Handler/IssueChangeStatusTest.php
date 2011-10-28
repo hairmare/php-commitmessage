@@ -44,7 +44,7 @@ class CommitMessage_Handler_IssueChangeStatusTest
         );
 
         $redmine = $this->getMock(
-            'Redmine_Issue_Api',
+            'Redmine_IssueApi',
             array(
                 'find',
                 'setStatusId',

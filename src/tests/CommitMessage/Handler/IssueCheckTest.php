@@ -55,7 +55,7 @@ class CommitMessage_Handler_IssueCheckTest extends PHPUnit_Framework_TestCase
             )
         );
         $issue = $this->getMock(
-            'Redmine_Issue_Api',
+            'Redmine_IssueApi',
             array(
                 'find',
                 'getStatusId',

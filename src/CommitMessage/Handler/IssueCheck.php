@@ -1,7 +1,7 @@
 <?php
 
 require_once 'src/CommitMessage/Handler/Issue.php';
-require_once 'src/Redmine/Issue/Api.php';
+require_once 'src/Redmine/IssueApi.php';
 
 /**
  * look if issue is in db

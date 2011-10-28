@@ -51,7 +51,7 @@ class CommitMessage_Handler_IssueDecorateTest
         );
 
         $redmine = $this->getMock(
-            'Redmine_Issue_Api',
+            'Redmine_IssueApi',
             array(
                 'find',
                 'addNoteToTicket',

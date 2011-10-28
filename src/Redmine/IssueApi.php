@@ -6,7 +6,7 @@ class Issue extends Redmine_ActiveResource
 {
 }
 
-class Redmine_Issue_Api
+class Redmine_IssueApi
 {
     private $_issue = false;
 

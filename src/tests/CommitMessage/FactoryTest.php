@@ -36,7 +36,7 @@ class CommitMessage_FactoryTest
     public function testCreateRedmineIssueApi()
     {
         $this->assertInstanceOf(
-            'Redmine_Issue_Api',
+            'Redmine_IssueApi',
             $this->_object->createRedmineIssueApi()
         );
     }

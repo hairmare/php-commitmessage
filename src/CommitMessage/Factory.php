@@ -7,7 +7,7 @@ class CommitMessage_Factory
 {
     public function createRedmineIssueApi()
     {
-        return new Redmine_Issue_Api;
+        return new Redmine_IssueApi;
     }
 
     public function createHandlerWarnMissingText()
