@@ -70,7 +70,8 @@ class CommitMessage_Handler_IssueChangeStatusTest
 
         $this->_object->setFactory($factory);
 
-        $this->_object->setNewStatus(1, 2);
+	$this->_object->setIssueId(1);
+        $this->_object->setNewStatus(2);
         $this->_object->run();
     }
 

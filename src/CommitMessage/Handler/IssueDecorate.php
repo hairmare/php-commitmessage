@@ -35,7 +35,7 @@ class CommitMessage_Handler_IssueDecorate extends CommitMessage_Handler_Issue
         $note  = "commit: *$head*\n\n";
         $note .= "* http://websvn/url/\n\n<pre>$body</pre>";
 
-        $this->_getRedmine()->addNoteToTicket($note, $this->getIssueId());
+        $this->_getRedmine()->addNoteToTicket($this->getIssueId(), $note);
     }
 }
 

@@ -26,7 +26,9 @@ require_once 'src/CommitMessage/Handler/IssueChangeStatus.php';
 // testing...
 $test = 'ich commit mal was...
 
-in richtigem format und mit issue #27';
+in richtigem format und mit issue #27
+
+dr boerner';
 
 // split message in parts
 $splitter = new CommitMessage_Split;
