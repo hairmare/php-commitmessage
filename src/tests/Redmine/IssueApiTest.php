@@ -89,9 +89,8 @@ class Redmine_IssueApiTest extends PHPUnit_Framework_TestCase
         // this should not replace _issue since that was initialized to a mock
         // this leaves us with a CRAP index of about 2 that can't be further 
         // reduced
-
-        $this->_issue->expects($this->never())
-                     ->method('_onInit');
+        $this->_issue->expects($this->never()) 
+                     ->method('_onInit'); // <<<< doens actually work :(
         
         $this->_object->lazyInit();
     }
@@ -121,11 +120,9 @@ class Redmine_IssueApiTest extends PHPUnit_Framework_TestCase
                      ->will($this->returnValue($this->_saver));
 
         $this->_object->setStatusId(1, 1);
-
     }
 
     /**
-     * @todo Implement testAddNoteToTicket().
      */
     public function testAddNoteToTicket()
     {

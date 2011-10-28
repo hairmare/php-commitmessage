@@ -35,20 +35,23 @@ class Redmine_IssueApi
     {
         $this->_issue = $issue;
     }
+
+    /**
+     * not aiming for nice code here
+     *
+     * The whole api is full of state from my pov. It
+     * also looks like it has some automated test of
+     * its own which is why i will be concentrating
+     * on solving other problems.
+     * 
+     * @return void
+     */
     protected function _lazyInit()
     {
         if (!$this->_issue) {
+            // @codeCoverageIgnoreStart
             $this->_setIssue(new Issue);
-            $this->_onInit();
+            // @codeCoverageIgnoreEnd
         }
     }
-    /**
-     * helper for proper unit testing and future expansion
-     */
-    private function _onInit()
-    {
-        // i can add tests to make sure this is called if you plan on using it
-        return;
-    }
-
 }
