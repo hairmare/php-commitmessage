@@ -12,7 +12,7 @@
 . /lib/lsb/init-functions
 
 # Modify it to your configuration
-DIR=/srv/redmine/
+DIR=/usr/integrated-team-tracker
 
 # Start Redmine in daemon mode.
 start(){

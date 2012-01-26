@@ -7,7 +7,7 @@
     </description>
 
     <property name="pkg.name"    value="integrated-team-tracker"/>
-    <property name="pkg.version" value="0.0.2"/>
+    <property name="pkg.version" value="0.0.4"/>
 
     <property environment="env"/>
     <property name="build.path"  value="${env.PWD}/build"/>
@@ -54,8 +54,8 @@
     </target>
 
     <target name="build" depends="init">
-        <unzip src="source/phpactiveresource-0.14-beta.tar.gz"
-               dest="lib/"/>
+        <!--unzip src="source/phpactiveresource-0.14-beta.tar.gz"
+               dest="lib/"/-->
     </target>
 
     <target name="phpunit">
@@ -115,6 +115,11 @@
                 <exclude name="archives/**"/>
                 <exclude name="src/**"/>
                 <exclude name="gems/*/cache/*"/>
+            </tarfileset>
+            <!-- i can haz initscript -->
+            <tarfileset dir="./"
+                        prefix="${pkg.name}-${pkg.version}/.rvm">
+                <include name="init"/>
             </tarfileset>
             <!-- rpm building is much easier if we include the specfile in the tarball -->
             <tarfileset dir="build/">

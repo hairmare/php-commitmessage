@@ -1,10 +1,10 @@
 
 %define name    integrated-team-tracker
-%define version 0.0.2
+	%define version 0.0.4
 
 Name:      %{name}
 Version:   %{version}
-Release:   1
+Release:   2
 Source:    %{name}-%{version}.tgz
 Summary:   fully integrated redmine setup
 Group:     Development
@@ -14,6 +14,9 @@ BuildRoot: /tmp/%{name}-%{version}-root
 # make this rpm relocatable
 Prefix:    /usr/%{name}
 
+Requires(pre): /usr/sbin/useradd, /usr/bin/getent
+Requires(postun): /usr/sbin/userdel
+
 %description
 Fully integrated redmine package that may be installed in a slotted
 manner by using the rpm relocatable feature. The idea is that each
@@ -22,10 +25,11 @@ of pain involved. This contains quite some sub packages since it
 will be used to configure a load of services on various systems.
 This base package only contains the needed libraries. See the 
 subpackages for more info:
-- team
-- puppet
-- hudson
-- jabber
+- team (redmine)
+- (puppet)
+- continuous integration (hudson/jenkins)
+- comms/im (jabber)
+so far I have only gotten down to the team part (redmine).
 
 %package team
 Group:   Development
@@ -33,8 +37,8 @@ Summary: The team package contains the redmine install
 
 %description team
 The actual redmine installation in a relocateable way useable for
-multi installs. The forthcoming puppet module will use this to
-install multiple puppet frontends.
+multi installs (fingers crossed). The forthcoming puppet module 
+will use this to install multiple puppet frontends.
 
 #%package puppet
 #Group:   Development
@@ -49,12 +53,21 @@ echo $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/%{name}
 cp -r redmine $RPM_BUILD_ROOT/usr/%{name}/
 cp -r .rvm    $RPM_BUILD_ROOT/usr/%{name}/
+mkdir -p $RPM_BUILD_ROOT/etc/init.d
+cp ../init $RPM_BUILD_ROOT/etc/init.d/itt-team
+# @todo create working ~/.rvmrc setup in $HOME in postinstall or puppet
+
+#%pre
+# not worth getting to run since puppet will manage anyway
+#/usr/bin/getent group itt-team || /usr/sbin/groupadd -r itt-team
+#/usr/bin/getent passwd itt-team || /usr/sbin/useradd -r -d /usr/integrated-team-tracker -s /bin/false itt-team
 
 %files
 # basic 'userhome' where our redmine instance will live
 /usr/%{name}/.rvm/
 
 %files team
+/etc/init.d/itt-team
 /usr/%{name}/redmine/
 
 #%files puppet
