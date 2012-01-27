@@ -13,31 +13,34 @@
 
 # Modify it to your configuration
 DIR=/usr/integrated-team-tracker
+RUBY=$DIR/.rvm/rubies/ruby-1.8.7-p352/bin/ruby
+REDMINE=$DIR/redmine
 
 # Start Redmine in daemon mode.
 start(){
-	log_daemon_msg "Starting Redmine WebRick"
-	cd $DIR
-	log_progress_msg
-	ruby script/server -d -e production &> /dev/null
-	log_progress_msg
-	log_end_msg 0
+	echo -n "Starting Redmine WebRick"
+	cd $REDMINE
+	echo -n .
+	$RUBY script/server -d -e production &> /dev/null
+	echo -n .
+	log_success_msg 0
 }
 
 # Stop Redmine daemon
 stop(){
-	log_daemon_msg "Stopping Redmine WebRick"
-	RUBYPID=`ps aux | grep "ruby script/server -d -e production" | grep -v grep | awk '{print $2}'`
-	log_progress_msg
+	echo -n  "Stopping Redmine WebRick"
+	RUBYPID=`ps aux | grep "$RUBY script/server -d -e production" | grep -v grep | awk '{print $2}'`
+	echo -n .
 	if [ "x$RUBYPID" != "x" ]; then
 		kill -2 $RUBYPID
 	fi
-	log_end_msg 0
+	log_success_msg 0
 }
 
 # Check if Redmine is running
 status(){
-	RUBYPID=`ps aux | grep "ruby script/server -d -e production" | grep -v grep | awk '{print $2}'`
+	echo "$RUBY script/server -d -e production"
+	RUBYPID=`ps aux | grep "$RUBY script/server -d -e production" | grep -v grep | awk '{print $2}'`
 	if [ "x$RUBYPID" = "x" ]; then
 		echo "* Redmine is not running"
 	else

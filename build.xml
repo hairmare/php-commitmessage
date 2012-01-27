@@ -7,7 +7,7 @@
     </description>
 
     <property name="pkg.name"    value="integrated-team-tracker"/>
-    <property name="pkg.version" value="0.0.4"/>
+    <property name="pkg.version" value="0.0.5"/>
 
     <property environment="env"/>
     <property name="build.path"  value="${env.PWD}/build"/>

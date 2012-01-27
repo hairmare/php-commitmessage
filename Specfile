@@ -1,6 +1,6 @@
 
 %define name    integrated-team-tracker
-	%define version 0.0.4
+%define version 0.0.5
 
 Name:      %{name}
 Version:   %{version}
@@ -53,8 +53,10 @@ echo $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/%{name}
 cp -r redmine $RPM_BUILD_ROOT/usr/%{name}/
 cp -r .rvm    $RPM_BUILD_ROOT/usr/%{name}/
+chmod +x $RPM_BUILD_ROOT/usr/%{name}/.rvm/rubies/ruby-1.8.7-p352/bin/ruby
 mkdir -p $RPM_BUILD_ROOT/etc/init.d
 cp ../init $RPM_BUILD_ROOT/etc/init.d/itt-team
+chmod + $RPM_BUILD_ROOT/etc/init.d/itt-team
 # @todo create working ~/.rvmrc setup in $HOME in postinstall or puppet
 
 #%pre
