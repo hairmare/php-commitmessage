@@ -60,11 +60,8 @@
 
     <target name="phpunit">
         <exec executable="phpunit" failonerror="true">
-            <arg value="--coverage-clover=build/coverage.xml"/>
-            <arg value="--coverage-html=build/coverage-html"/>
-            <arg value="--log-junit=build/junit.xml"/>
-            <arg value="--bootstrap=src/Bootstrap.php"/>
-            <arg value="src/tests/"/>
+            <arg value="-c"/>
+            <arg value="phpunit.xml"/>
         </exec>
     </target>
 
