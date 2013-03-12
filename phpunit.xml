@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="src/Bootstrap.php">
+  <testsuites>
+    <testsuite name="PHPUnit Tests">
+      <directory suffix=".php">src/tests/</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <blacklist>
+      <directory>lib/</directory>
+      <directory>src/tests/</directory>
+    </blacklist>
+    <whitelist>
+      <directory>src/</directory>
+    </whitelist>
+  </filter>
+  <logging>
+    <log type="coverage-clover" target="build/clover.xml"/>
+    <log type="coverage-html" target="build/coverage"/>
+  </logging>
+</phpunit>
