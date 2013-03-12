@@ -56,7 +56,7 @@ class CommitMessage_Handler_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $caller = $this->getMock('CommitMessage_HandlerStack');
 
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->setCaller($caller);
         $this->_object->setCaller($caller);
     }

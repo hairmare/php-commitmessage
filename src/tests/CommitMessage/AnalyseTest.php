@@ -113,7 +113,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     public function testAnalyseMissingSplitter()
     {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->analyse();
     }
 
@@ -122,7 +122,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     public function testAnalyseMissingHandlerStack()
     {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
         $this->_object->analyse();
     }
@@ -132,7 +132,7 @@ class CommitMessage_AnalyseTest extends PHPUnit_Framework_TestCase
      */
     public function testAnalyseMissingFactory()
     {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->setSplitter($this->getMock('CommitMessage_Splitter'));
         $this->_object->setHandlerStack(
             $this->getMock(

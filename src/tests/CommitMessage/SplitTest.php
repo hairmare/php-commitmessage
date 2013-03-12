@@ -49,13 +49,13 @@ class CommitMessage_SplitTest extends PHPUnit_Framework_TestCase
 
     public function testGetDataWithoutData()
     {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->getData();
     }
 
     public function testSplitWithoutMessage()
     {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->split();
     }
 }

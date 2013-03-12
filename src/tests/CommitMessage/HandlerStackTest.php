@@ -39,7 +39,7 @@ class CommitMessage_HandlerStackTest extends PHPUnit_Framework_TestCase
         $this->_object->setCaller($caller);
         $this->assertSame($caller, $this->_object->getCaller());
 
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->_object->setCaller($caller);
     }
 
