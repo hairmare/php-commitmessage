@@ -62,6 +62,9 @@
         <exec executable="phpunit" failonerror="true">
             <arg value="-c"/>
             <arg value="phpunit.xml"/>
+            <!-- doesnt work from xml for some reason -->
+            <arg value="--log-junit"/>
+            <arg value="junit.xml"/>
         </exec>
     </target>
 
