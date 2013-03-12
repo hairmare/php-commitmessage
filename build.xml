@@ -85,11 +85,14 @@
     </target>
 
     <target name="phploc">
-		<exec executable="phploc">
+
+        <!-- missing on build server for now
+        <exec executable="phploc">
 			<arg value="--log-csv"/>
 			<arg value="build/phploc.csv"/>
 			<arg path="src/"/>
 		</exec>
+		 -->
     </target>
 
     <target name="integrate" depends="phpunit,checkstyle,pmd,phploc"/>
