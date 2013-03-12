@@ -64,7 +64,7 @@
             <arg value="phpunit.xml"/>
             <!-- doesnt work from xml for some reason -->
             <arg value="--log-junit"/>
-            <arg value="junit.xml"/>
+            <arg value="build/junit.xml"/>
         </exec>
     </target>
 
