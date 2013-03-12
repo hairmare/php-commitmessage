@@ -88,7 +88,7 @@
 
         <!-- missing on build server for now
         <exec executable="phploc">
-			<arg value="--log-csv"/>
+			<arg value="-____-log-csv"/> waufish
 			<arg value="build/phploc.csv"/>
 			<arg path="src/"/>
 		</exec>
