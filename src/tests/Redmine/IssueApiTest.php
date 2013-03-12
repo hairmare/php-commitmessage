@@ -26,11 +26,6 @@ class Redmine_IssueApi_Unprotected extends Redmine_IssueApi
         return $this->_lazyInit();
     }
 }
-// this is dirty, i need to integrate activeresource tests, they exist!
-// moving it here does not make it safer it will wander to bootstrap someday
-class ActiveResource
-{
-}
 
 /**
  * Test class for Redmine_IssueApi.
