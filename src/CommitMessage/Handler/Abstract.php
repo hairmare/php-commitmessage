@@ -12,7 +12,7 @@ abstract class CommitMessage_Handler_Abstract
     public function setCaller($caller)
     {
         if ($this->_caller) {
-            throw new Exception('Resetting caller is illegal');
+            throw new RuntimeException('Resetting caller is illegal');
         }
         $this->_caller = $caller;
     }

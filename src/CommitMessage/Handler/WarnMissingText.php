@@ -7,6 +7,6 @@ class CommitMessage_Handler_WarnMissingText
 {
     public function run()
     {
-        throw new Exception('missing test');
+        throw new RuntimeException('missing test');
     }
 }

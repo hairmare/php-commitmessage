@@ -14,7 +14,7 @@ class CommitMessage_Split
     public function getData()
     {
         if (!$this->_data) {
-            throw new Exception('No data found, have you called split() yet?');
+            throw new RuntimeException('No data found, have you called split() yet?');
         }
         return $this->_data;
     }
@@ -31,7 +31,7 @@ class CommitMessage_Split
     public function split()
     {
         if (!$this->_message) {
-            throw new Exception('No message to split.');
+            throw new RuntimeException('No message to split.');
         }
         $lines = explode("\n", $this->_message);
         $this->_data = array(

@@ -30,17 +30,17 @@ class CommitMessage_Analyse
     public function analyse()
     {
         if (!$this->_splitter) {
-            throw new Exception(
+            throw new RuntimeException(
                 'please set a splitter before calling analyse()'
             );
         }
         if (!$this->_handlerStack) {
-            throw new Exception(
+            throw new RuntimeException(
                 'please set a handlerStack before calling analyse()'
             );
         }
         if (!$this->_factory) {
-            throw new Exception(
+            throw new RuntimeException(
                 'please set a factory before calling analyse()'
             );
         }

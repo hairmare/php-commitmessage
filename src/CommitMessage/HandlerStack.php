@@ -10,7 +10,7 @@ class CommitMessage_HandlerStack extends ArrayObject
     public function setCaller($caller)
     {
         if ($this->_caller) {
-            throw new Exception('You may not override the caller');
+            throw new RuntimeException('You may not override the caller');
         }
         $this->_caller = $caller;
     }

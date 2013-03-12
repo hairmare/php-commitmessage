@@ -15,10 +15,10 @@ class CommitMessage_Handler_IssueChangeStatus
     public function run()
     {
         if (!$this->_newStatus) {
-            throw new Exception('IssueChangeStatus called without newStatus');
+            throw new RuntimeException('IssueChangeStatus called without newStatus');
         }
         if (!$this->getIssueId()) {
-            throw new Exception('IssueChangeStatus called without issueId');
+            throw new RuntimeException('IssueChangeStatus called without issueId');
         }
 
         $this->_setRedmine($this->getFactory()->createRedmineIssueApi());
