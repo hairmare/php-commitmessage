@@ -63,6 +63,7 @@
             <arg value="--coverage-clover=build/coverage.xml"/>
             <arg value="--coverage-html=build/coverage-html"/>
             <arg value="--log-junit=build/junit.xml"/>
+            <arg value="--bootstrap=src/Bootstrap.php"/>
             <arg value="src/tests/"/>
         </exec>
     </target>
