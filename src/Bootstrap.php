@@ -8,7 +8,7 @@
  * coverge in builds. This should be in ActiveResource.php
  * and it will get removed when i do autoloading anyhow.
  */
-require_once 'lib/phpactiveresource/ActiveResource.php';
+require_once __DIR__.'/../lib/phpactiveresource/ActiveResource.php';
 
 /* these are my own working, they to need autoloading
  */
