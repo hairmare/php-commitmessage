@@ -28,8 +28,20 @@ class Redmine_IssueApi
     public function addNoteToTicket($trackerId, $newNoteText)
     {
         $this->_lazyInit();
-        $this->_issue->find($trackerId);
-        $this->_issue->set('notes', $newNoteText)->save();
+        
+        // add issues/ to oath so activeresource.php creates working URLs
+        $this->_issue->element_name = 'issue';
+        
+        $this->_issue->find('issues/'.$trackerId);
+        
+        // make clone with new note
+        $newNote = $this->_issue->set('notes', $newNoteText);
+        
+        // this is needed so activeresource.php creates working URLs 
+        $newNote->site .= '/issues';
+        $newNote->element_name = 'issue';
+        
+        $newNote->save();
     }
     protected function _setIssue($issue)
     {

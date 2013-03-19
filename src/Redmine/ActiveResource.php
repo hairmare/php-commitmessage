@@ -6,7 +6,7 @@ class Redmine_ActiveResource extends ActiveResource
     {
         $this->request_format = 'xml';
         
-        $iniData = parse_ini_file(__DIR__.'../../localConfig.ini');
+        $iniData = parse_ini_file(__DIR__.'/../../localConfig.ini');
         $this->setSite($iniData['redmine.site']);
     }
     public function setSite($site)
